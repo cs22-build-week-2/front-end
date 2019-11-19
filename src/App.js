@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { initialize, move } from './endpointCalls';
+import { initialize, move, checkStatus } from './endpointCalls';
 
 function App() {
   const playerState = {
@@ -17,14 +17,51 @@ function App() {
     messages: [],
   };
 
+  const roomState = {
+    room_id: 0,
+    title: '',
+    description: '',
+    coordinates: '',
+    exits: [],
+    cooldown: 0,
+    errors: [],
+    messages: [],
+  };
+
   const [key, setKey] = useState('');
   const [currentApiKey, setCurrentApiKey] = useState('');
   const [playerStatus, setPlayerStatus] = useState(playerState);
   const [cooldown, setCooldown] = useState(0);
+  const [roomInfo, setRoomInfo] = useState(roomState);
 
   useEffect(() => {
     initialize()
       .then(res => {
+        let room_id = res.data.room_id;
+        let title = res.data.title;
+        let description = res.data.description;
+        let coordinates = res.data.coordinates;
+        let exits = res.data.exits;
+        let room_cooldown = res.data.cooldown;
+        let errors = res.data.errors;
+        let messages = res.data.messages;
+
+        setRoomInfo({
+          room_id: room_id,
+          title: title,
+          description: description,
+          coordinates: coordinates,
+          exits: exits,
+          cooldown: room_cooldown,
+          errors: errors,
+          messages: messages,
+        });
+      })
+      .catch(err => console.log(err));
+
+    checkStatus()
+      .then(res => {
+        console.log('playerstatus', res.data);
         let playerName = res.data.name;
         let cooldown = res.data.cooldown;
         let encumbrance = res.data.encumbrance;
@@ -32,6 +69,7 @@ function App() {
         let speed = res.data.speed;
         let gold = res.data.gold;
         let bodywear = res.data.bodywear;
+        let footwear = res.data.footwear;
         let inventory = res.data.inventory;
         let status = res.data.status;
         let errors = res.data.errors;
@@ -106,13 +144,25 @@ function App() {
         <p>{currentApiKey}</p>
       </div>
       <div>
-        <h3>Player Status</h3>
-        <p>Title: {playerStatus.title}</p>
-        <p>Description: {playerStatus.description}</p>
-        <p>Coordinates: {playerStatus.coordinates}</p>
-        <p>Room ID: {playerStatus.room_id}</p>
-        <p>Exits: {playerStatus.exits}</p>
-        <p>Items: {playerStatus.items}</p>
+        <h3>Player Status(room status??)</h3>
+        <p>Title: {roomInfo.title}</p>
+        <p>Description: {roomInfo.description}</p>
+        <p>Coordinates: {roomInfo.coordinates}</p>
+        <p>Room ID: {roomInfo.room_id}</p>
+        <p>Exits: {roomInfo.exits}</p>
+        <p>Items: {roomInfo.items}</p>
+      </div>
+      <div>
+        <h3>Player Status/Inventory</h3>
+        <p>Name: {playerStatus.name}</p>
+        <p>Cooldown: {playerStatus.cooldown}</p>
+        <p>Encumbrance: {playerStatus.encumbrance}</p>
+        <p>Strength: {playerStatus.strength}</p>
+        <p>Speed: {playerStatus.speed}</p>
+        <p>Gold: {playerStatus.gold}</p>
+        <p>Bodywear: {playerStatus.bodywear}</p>
+        <p>Footwear: {playerStatus.footwear}</p>
+        <p>Inventory: {playerStatus.inventory}</p>
       </div>
       <div>
         <h3>Move Buttoms</h3>
