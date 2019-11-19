@@ -5,10 +5,14 @@ function App() {
   const [key, setKey] = useState("");
   const [currentApiKey, setCurrentApiKey] = useState("");
   const [playerStatus, setPlayerStatus] = useState({});
+  const [cooldown, setCooldown] = useState(0);
 
   useEffect(() => {
     initialize()
-      .then(res => setPlayerStatus(res.data))
+      .then(res => {
+        setPlayerStatus(res.data)
+        setCooldown(res.data.cooldown)
+      })
       .catch(err => console.log(err));
   }, []);
 
@@ -17,6 +21,15 @@ function App() {
       setCurrentApiKey(localStorage.getItem("token"));
     }
   }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(function() {
+      if (cooldown > 0) {
+        setCooldown(cooldown - 1);
+      }
+    }, 1000);
+    return () => clearTimeout(timer)
+  }, [cooldown]);
 
   const onApiKeyChange = event => {
     setKey(event.target.value);
@@ -30,7 +43,10 @@ function App() {
 
   const onMoveButton = direction => {
     move({ direction })
-      .then(res => setPlayerStatus(res))
+      .then(res => {
+        setPlayerStatus(res.data)
+        setCooldown(res.data.cooldown)
+      })
       .catch(err => console.log(err));
   };
 
@@ -61,18 +77,36 @@ function App() {
       </div>
       <div>
         <h3>Move Buttoms</h3>
-        <button type="button" onClick={() => onMoveButton("n")}>
+        <button
+          type="button"
+          onClick={() => onMoveButton("n")}
+          disabled={cooldown}
+        >
           Up
         </button>
-        <button type="button" onClick={() => onMoveButton("s")}>
+        <button
+          type="button"
+          onClick={() => onMoveButton("s")}
+          disabled={cooldown}
+        >
           Down
         </button>
-        <button type="button" onClick={() => onMoveButton("w")}>
+        <button
+          type="button"
+          onClick={() => onMoveButton("w")}
+          disabled={cooldown}
+        >
           Left
         </button>
-        <button type="button" onClick={() => onMoveButton("e")}>
+        <button
+          type="button"
+          onClick={() => onMoveButton("e")}
+          disabled={cooldown}
+        >
           Right
         </button>
+        <h5>Move Cooldown</h5>
+        <p>{cooldown}</p>
       </div>
     </div>
   );
