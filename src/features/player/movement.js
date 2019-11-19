@@ -1,8 +1,7 @@
 import store from '../../config/store.js';
 import { SPRITE_SIZE, MAP_HEIGHT, MAP_WIDTH } from '../../config/constants.js';
-import axiosWithAuth from '../../axiosWithAuth.js';
-
-import { move } from '../../endpointCalls.js';
+// import axiosWithAuth from '../../axiosWithAuth.js';
+// import { move } from '../../endpointCalls.js';
 
 export default function handleMovement(player) {
   function getNewPosition(oldPos, direction) {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { checkStatus } from '../endpointCalls';
 import './index.css';
 
@@ -18,6 +18,17 @@ const PlayerStatus = () => {
     messages: [],
   };
   const [playerStatus, setPlayerStatus] = useState(playerState);
+  const [playerCooldown, setPlayerCooldown] = useState(0);
+
+  useEffect(() => {
+    const timer = setTimeout(function() {
+      if (playerCooldown > 0) {
+        setPlayerCooldown(playerCooldown - 1);
+      }
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [playerCooldown]);
+
   const onRefreshPlayerStatus = () => {
     checkStatus()
       .then(res => {
@@ -43,32 +54,36 @@ const PlayerStatus = () => {
           gold: gold,
           bodywear: bodywear,
           footwear: footwear,
-          inventory: inventory,
-          status: status,
-          errors: errors,
-          messages: messages,
+          inventory: JSON.stringify(inventory),
+          status: JSON.stringify(status),
+          errors: JSON.stringify(errors),
+          messages: JSON.stringify(messages),
         });
+        setPlayerCooldown(cooldown);
       })
       .catch(err => console.log(err));
   };
   return (
     <>
-      <div>
+      <div className="player-status">
         <h3>Player Status/Inventory</h3>
-        <button type='button' onClick={onRefreshPlayerStatus}>
+        <button
+          type='button'
+          onClick={onRefreshPlayerStatus}
+          disabled={playerCooldown}>
           Refresh Player Status
         </button>
-        <div className='attributes'>
-          <p>Name: {playerStatus.name}</p>
-          <p>Cooldown: {playerStatus.cooldown}</p>
-          <p>Encumbrance: {playerStatus.encumbrance}</p>
-          <p>Strength: {playerStatus.strength}</p>
-          <p>Speed: {playerStatus.speed}</p>
-          <p>Gold: {playerStatus.gold}</p>
-          <p>Bodywear: {playerStatus.bodywear}</p>
-          <p>Footwear: {playerStatus.footwear}</p>
-          <p>Inventory: {playerStatus.inventory}</p>
-        </div>
+        <p>Name: {playerStatus.name}</p>
+        <p>Cooldown: {playerStatus.cooldown}</p>
+        <p>Encumbrance: {playerStatus.encumbrance}</p>
+        <p>Strength: {playerStatus.strength}</p>
+        <p>Speed: {playerStatus.speed}</p>
+        <p>Gold: {playerStatus.gold}</p>
+        <p>Bodywear: {playerStatus.bodywear}</p>
+        <p>Footwear: {playerStatus.footwear}</p>
+        <p>Inventory: {playerStatus.inventory}</p>
+        <h5>Player Cooldown</h5>
+        <p>{playerCooldown}</p>
       </div>
     </>
   );

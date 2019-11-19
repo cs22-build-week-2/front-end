@@ -9,7 +9,7 @@ function App() {
     <div>
       <ApiKey />
       <Room />
-      <PlayerStatus />
+      {/* <PlayerStatus /> */}
       <World />
     </div>
   );

@@ -1,10 +1,10 @@
 import React from 'react';
 import Player from '../player';
 import Map from '../map';
-import axios from 'axios';
+// import axios from 'axios';
 import axiosWithAuth from '../../axiosWithAuth';
 
-var _ = require('lodash');
+// var _ = require('lodash');
 
 class World extends React.Component {
   state = {
