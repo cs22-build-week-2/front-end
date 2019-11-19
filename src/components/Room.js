@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { initialize, move } from "../endpointCalls";
+import { initialize, move, pickupTreasure, dropTreasure } from "../endpointCalls";
 
 const Room = () => {
   const roomState = {
@@ -15,6 +15,7 @@ const Room = () => {
   const [roomCooldown, setRoomCooldown] = useState(0);
   const [roomInfo, setRoomInfo] = useState(roomState);
   const [roomId, setRoomId] = useState("");
+  const [itemChange, setItemChange] = useState({nameOfItem: ''})
 
   useEffect(() => {
     initialize()
@@ -67,6 +68,21 @@ const Room = () => {
   const onRoomIdChange = event => {
     setRoomId(event.target.value);
   };
+
+  const submitItemPickup = (e) => {
+    e.preventDefault(); 
+    pickupTreasure(itemChange.nameOfItem)
+  }
+  
+  const onChange = e => {
+    setItemChange({[e.target.name]: e.target.value})
+  }
+
+  const submitDropItem = e => {
+    e.preventDefault(); 
+    dropTreasure(itemChange.nameOfItem); 
+  }
+
   return (
     <>
       <div>
@@ -80,6 +96,11 @@ const Room = () => {
           <p>Items: {roomInfo.items}</p>
         </div>
         <div>
+          <form onSubmit={submitItemPickup}>
+            <input type='text' name='itemName' placeholder='Add or drop items here' onChange={onChange} value={itemChange.nameOfItem} />
+          <button onClick={() => submitItemPickup() }>Get Item</button>
+          <button onClick={() => submitDropItem()}>Drop Item</button>
+          </form>
           <h3>Move Buttons</h3>
           <input
             name="roomId"

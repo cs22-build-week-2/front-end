@@ -11,16 +11,18 @@ export const move = direction => {
 
 // {"name":"treasure"}
 export const pickupTreasure = nameOfTreasure => {
+  const treasure = {"name": nameOfTreasure}
   axiosWithAuth()
-    .post("/adv/take/", nameOfTreasure)
+    .post("/adv/take/", treasure)
     .then(res => console.log(res))
     .catch(err => console.log(err));
 };
 
 // {"name":"treasure"}
 export const dropTreasure = nameOfTreasure => {
+  const treasure = {"name": nameOfTreasure}
   axiosWithAuth()
-    .post("/adv/drop/", nameOfTreasure)
+    .post("/adv/drop/", treasure)
     .then(res => console.log(res))
     .catch(err => console.log(err));
 };
