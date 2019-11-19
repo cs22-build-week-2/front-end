@@ -50,6 +50,7 @@ const Room = () => {
     }, 1000);
     return () => clearTimeout(timer);
   }, [roomCooldown]);
+  
   const onMoveButton = direction => {
     let moveObject = { direction };
     if (roomId) {
