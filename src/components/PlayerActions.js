@@ -6,7 +6,7 @@ import {
   pickupTreasure
 } from "../endpointCalls";
 
-const PlayerActions = () => {
+const PlayerActions = ({ changeRoomInfo }) => {
   const [itemOrPlayer, setItemOrPlayer] = useState("");
   const [wearEquipmentS, setWearEquipment] = useState("");
   const [unwearEquipmentS, setUnwearEquipment] = useState("");
@@ -47,7 +47,7 @@ const PlayerActions = () => {
   const submitPickupTreasure = event => {
     event.preventDefault();
     pickupTreasure({ name: itemOrPlayer })
-      .then(res => console.log(res))
+      .then(res => changeRoomInfo(res.data))
       .catch(err => console.log(err));
   };
 
