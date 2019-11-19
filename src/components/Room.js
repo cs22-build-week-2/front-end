@@ -134,7 +134,11 @@ const Room = () => {
         <h5>Move Cooldown</h5>
         <p>{roomCooldown}</p>
       </div>
-      <PlayerActions changeRoomInfo={changeRoomInfo}/>
+      <PlayerActions
+        changeRoomInfo={changeRoomInfo}
+        setRoomCooldown={setRoomCooldown}
+        roomCooldown={roomCooldown}
+      />
     </>
   );
 };

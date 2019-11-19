@@ -5,11 +5,24 @@ import {
   unwearEquipment,
   pickupTreasure
 } from "../endpointCalls";
+import ItemOrPlayerStatus from "./ItemOrPlayerStatus";
 
-const PlayerActions = ({ changeRoomInfo }) => {
+const PlayerActions = ({ changeRoomInfo, setRoomCooldown, roomCooldown }) => {
   const [itemOrPlayer, setItemOrPlayer] = useState("");
   const [wearEquipmentS, setWearEquipment] = useState("");
   const [unwearEquipmentS, setUnwearEquipment] = useState("");
+  const [itemOrPlayerData, setItemOrPlayerData] = useState({
+    attributes: "",
+    description: "",
+    exp: "",
+    itemtype: "",
+    level: "",
+    name: "",
+    weight: "",
+    errors: "",
+    messages: "",
+    cooldown: ""
+  });
 
   const onItemOrPlayerChange = event => {
     setItemOrPlayer(event.target.value);
@@ -26,7 +39,13 @@ const PlayerActions = ({ changeRoomInfo }) => {
   const submitItemOrPlayer = event => {
     event.preventDefault();
     checkItemOrPlayer({ name: itemOrPlayer })
-      .then(res => console.log(res))
+      .then(res => {
+        const errors = JSON.stringify(res.data.errors);
+        const messages = JSON.stringify(res.data.messages);
+        setItemOrPlayerData({ ...res.data, errors, messages });
+        setRoomCooldown(Math.round(res.data.cooldown));
+        setItemOrPlayer("");
+      })
       .catch(err => console.log(err));
   };
 
@@ -47,7 +66,10 @@ const PlayerActions = ({ changeRoomInfo }) => {
   const submitPickupTreasure = event => {
     event.preventDefault();
     pickupTreasure({ name: itemOrPlayer })
-      .then(res => changeRoomInfo(res.data))
+      .then(res => {
+        changeRoomInfo(res.data);
+        setItemOrPlayer("");
+      })
       .catch(err => console.log(err));
   };
 
@@ -59,11 +81,20 @@ const PlayerActions = ({ changeRoomInfo }) => {
           placeholder="Check Item or Player"
           onChange={onItemOrPlayerChange}
           value={itemOrPlayer}
+          disabled={roomCooldown}
         />
-        <button type="submit" onClick={event => submitItemOrPlayer(event)}>
+        <button
+          type="submit"
+          onClick={event => submitItemOrPlayer(event)}
+          disabled={roomCooldown}
+        >
           Check Item or Player
         </button>
-        <button type="submit" onClick={event => submitPickupTreasure(event)}>
+        <button
+          type="submit"
+          onClick={event => submitPickupTreasure(event)}
+          disabled={roomCooldown}
+        >
           Pick Up Treasure
         </button>
       </form>
@@ -73,8 +104,13 @@ const PlayerActions = ({ changeRoomInfo }) => {
           placeholder="Type Equipment to wear"
           onChange={onWearEquipmentChange}
           value={wearEquipmentS}
+          disabled={roomCooldown}
         />
-        <button type="submit" onClick={event => submitWearEquipment(event)}>
+        <button
+          type="submit"
+          onClick={event => submitWearEquipment(event)}
+          disabled={roomCooldown}
+        >
           Wear Equipment
         </button>
       </form>
@@ -84,11 +120,17 @@ const PlayerActions = ({ changeRoomInfo }) => {
           placeholder="Type Equipment to take off"
           onChange={onUnwearEquipmentChange}
           value={unwearEquipmentS}
+          disabled={roomCooldown}
         />
-        <button type="submit" onClick={event => submitUnwearEquipment(event)}>
+        <button
+          type="submit"
+          onClick={event => submitUnwearEquipment(event)}
+          disabled={roomCooldown}
+        >
           Take Off Equipment
         </button>
       </form>
+      <ItemOrPlayerStatus data={itemOrPlayerData} />
     </>
   );
 };
