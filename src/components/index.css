@@ -44,4 +44,6 @@ p {
 
 .player-status p {
   margin: 1px;
+  word-break: break-all;
+  white-space: normal;
 }

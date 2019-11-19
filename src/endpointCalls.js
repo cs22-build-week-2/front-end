@@ -1,4 +1,4 @@
-import axiosWithAuth from "./axiosWithAuth";
+import axiosWithAuth from './axiosWithAuth';
 
 export const initialize = () => {
   return axiosWithAuth().get('/adv/init/');
@@ -108,10 +108,10 @@ export const confirmSellTreasure = nameOfTreasure => {
 
 // {"name":"[NEW NAME]"}
 export const changeName = name => {
-  axiosWithAuth()
-    .post('/adv/change_name/')
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  const newName = { name: name, confirm: 'aye' };
+  return axiosWithAuth().post('/adv/change_name/', newName);
+  // .then(res => console.log(res))
+  // .catch(err => console.log(err));
 };
 
 export const pray = () => {

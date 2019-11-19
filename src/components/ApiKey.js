@@ -24,16 +24,6 @@ const ApiKey = () => {
   return (
     <>
       <div className='api-key'>
-        <form onSubmit={event => onApiKeySubmit(event)}>
-          <label htmlFor='token'>Input your API Key here!</label>
-          <input
-            name='token'
-            placeholder='Type in your api key'
-            onChange={event => onApiKeyChange(event)}
-            value={key}
-          />
-          <button type='submit'>Set Api Key</button>
-        </form>
         <div>
           <form onSubmit={event => onApiKeySubmit(event)}>
             <label htmlFor='token'>Input your API Key here!</label>
@@ -46,7 +36,7 @@ const ApiKey = () => {
             <button type='submit'>Set Api Key</button>
           </form>
         </div>
-        <div className="current-key">
+        <div className='current-key'>
           <h3>Current Api Key</h3>
           <p>{currentApiKey}</p>
         </div>

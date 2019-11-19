@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { checkStatus } from '../endpointCalls';
+import { checkStatus, changeName } from '../endpointCalls';
 import './index.css';
 
 const PlayerStatus = () => {
@@ -19,6 +19,7 @@ const PlayerStatus = () => {
   };
   const [playerStatus, setPlayerStatus] = useState(playerState);
   const [playerCooldown, setPlayerCooldown] = useState(0);
+  const [newName, setNewName] = useState({ newName: '' });
 
   useEffect(() => {
     const timer = setTimeout(function() {
@@ -63,9 +64,23 @@ const PlayerStatus = () => {
       })
       .catch(err => console.log(err));
   };
+
+  const onNameChange = event => {
+    setNewName({ [event.target.name]: event.target.value });
+  };
+
+  const onNameSubmit = event => {
+    event.preventDefault();
+    changeName(newName.newName)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => console.log(err));
+  };
+
   return (
     <>
-      <div className="player-status">
+      <div className='player-status'>
         <h3>Player Status/Inventory</h3>
         <button
           type='button'
@@ -74,6 +89,15 @@ const PlayerStatus = () => {
           Refresh Player Status
         </button>
         <p>Name: {playerStatus.name}</p>
+        <form onSubmit={event => onNameSubmit(event)}>
+          <input
+            name='newName'
+            placeholder='Type in your new name'
+            onChange={event => onNameChange(event)}
+            value={newName.newName}
+          />
+          <button type='submit'>Change Name</button>
+        </form>
         <p>Cooldown: {playerStatus.cooldown}</p>
         <p>Encumbrance: {playerStatus.encumbrance}</p>
         <p>Strength: {playerStatus.strength}</p>
