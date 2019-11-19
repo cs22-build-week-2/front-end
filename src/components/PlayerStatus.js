@@ -53,10 +53,10 @@ const PlayerStatus = () => {
           gold: gold,
           bodywear: bodywear,
           footwear: footwear,
-          inventory: inventory,
-          status: status,
-          errors: errors,
-          messages: messages
+          inventory: JSON.stringify(inventory),
+          status: JSON.stringify(status),
+          errors: JSON.stringify(errors),
+          messages: JSON.stringify(messages)
         });
         setPlayerCooldown(cooldown);
       })

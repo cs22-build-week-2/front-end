@@ -64,6 +64,7 @@ const PlayerActions = ({ setRoomCooldown, roomCooldown }) => {
 
   return (
     <>
+      <h3>Player Actions</h3>
       <form>
         <input
           name='itemOrPlayer'

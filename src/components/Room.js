@@ -17,7 +17,9 @@ const Room = () => {
     exits: [],
     cooldown: 0,
     errors: [],
-    messages: []
+    messages: [],
+    items: [],
+    players: []
   };
 
   const [roomCooldown, setRoomCooldown] = useState(0);
@@ -74,11 +76,10 @@ const Room = () => {
 
   const changeRoomInfo = roomData => {
     const exits = JSON.stringify(roomData.exits);
-    const items = JSON.stringify(roomData.items);
     const messages = JSON.stringify(roomData.messages);
     const players = JSON.stringify(roomData.players);
     const errors = JSON.stringify(roomData.errors);
-    setRoomInfo({ ...roomData, exits, items, messages, players, errors });
+    setRoomInfo({ ...roomData, exits, messages, players, errors });
     setRoomCooldown(Math.round(roomData.cooldown));
     setRoomId('');
   };
@@ -141,6 +142,8 @@ const Room = () => {
       .catch(err => console.log(err));
   };
 
+  console.log(roomInfo.items);
+
   return (
     <>
       <div>
@@ -151,7 +154,23 @@ const Room = () => {
           <p>Coordinates: {roomInfo.coordinates}</p>
           <p>Room ID: {roomInfo.room_id}</p>
           <p>Exits: {roomInfo.exits}</p>
-          <p>Items: {roomInfo.items}</p>
+          <p>
+            Items:{' '}
+            {roomInfo.items &&
+              roomInfo.items.map(item => (
+                <button
+                  name='nameOfItem'
+                  value={item}
+                  onClick={event => onItemChange(event)}
+                  disabled={roomCooldown}
+                >
+                  {item}
+                </button>
+              ))}
+          </p>
+          <p>Players: {roomInfo.players}</p>
+          <p>Messages: {roomInfo.messages}</p>
+          <p>Errors: {roomInfo.errors}</p>
         </div>
         <div>
           <form onSubmit={submitItemPickup}>
