@@ -2,6 +2,8 @@ import store from '../../config/store.js';
 import { SPRITE_SIZE, MAP_HEIGHT, MAP_WIDTH } from '../../config/constants.js';
 import axiosWithAuth from '../../axiosWithAuth.js';
 
+import { move } from '../../endpointCalls.js';
+
 export default function handleMovement(player) {
   function getNewPosition(oldPos, direction) {
     switch (direction) {
@@ -16,32 +18,6 @@ export default function handleMovement(player) {
     }
   }
 
-  // export default function handleMovement(player) {
-  // function getNewPosition(oldPos, direction) {
-  //   switch (direction) {
-  //     case 'WEST':
-  //       return [oldPos[0] - SPRITE_SIZE, oldPos[1]]; // [-40, 0]
-  //     case 'EAST':
-  //       return [oldPos[0] + SPRITE_SIZE, oldPos[1]];
-  //     case 'NORTH':
-  //       return [oldPos[0], oldPos[1] - SPRITE_SIZE];
-  //     case 'SOUTH':
-  //       return [oldPos[0], oldPos[1] + SPRITE_SIZE];
-  //   }
-  // }
-
-  // function getSpriteLocation(direction, walkIndex) {
-  //   switch (direction) {
-  //     case "s":
-  //       return `${SPRITE_SIZE * walkIndex}px ${SPRITE_SIZE * 0}px`;
-  //     case "e":
-  //       return `${SPRITE_SIZE * walkIndex}px ${SPRITE_SIZE * 1}px`;
-  //     case "w":
-  //       return `${SPRITE_SIZE * walkIndex}px ${SPRITE_SIZE * 2}px`;
-  //     case "n":
-  //       return `${SPRITE_SIZE * walkIndex}px ${SPRITE_SIZE * 3}px`;
-  //   }
-  // }
   function getSpriteLocation(direction, walkIndex) {
     switch (direction) {
       case 'SOUTH':
@@ -102,25 +78,27 @@ export default function handleMovement(player) {
     } else {
       dir = { direction: 'e' };
     }
-    axiosWithAuth()
-      .post('https://css22-9.herokuapp.com/api/adv/move/', dir)
-      .then(res => {
-        console.log(res.data.error_msg, 'res inside of attempt');
-        if (res.data.error_msg == '') {
-          const oldPos = store.getState().player.position; // 0,0
-          const newPos = getNewPosition(oldPos, direction); // -40, 0
+    // move(dir)
+    // .then(res => {
+    // console.log(res.data.error_msg, 'res inside of attempt');
+    // if (res.data.error_msg == '') {
+    const oldPos = store.getState().player.position; // 0,0
+    const newPos = getNewPosition(oldPos, direction); // -40, 0
 
-          if (observeBoundaries(oldPos, newPos))
-            // && observePath(oldPos, newPos))
-            dispatchPosition(direction, newPos);
-        } else {
-          console.log('ELSE!!!');
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    if (observeBoundaries(oldPos, newPos))
+      // && observePath(oldPos, newPos))
+      dispatchPosition(direction, newPos);
+    // } else {
+    // console.log('ELSE!!!');
+    //   }
+    // })
+    // .catch(err => {
+    //   console.log(err);
+    // });
   }
+  //   axiosWithAuth()
+  //     .post('https://css22-9.herokuapp.com/api/adv/move/', dir)
+  // }
 
   function handleKeyDown(e) {
     e.preventDefault();

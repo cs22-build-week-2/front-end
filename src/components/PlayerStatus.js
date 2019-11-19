@@ -1,20 +1,21 @@
-import React, { useState } from "react";
-import { checkStatus } from "../endpointCalls";
+import React, { useState } from 'react';
+import { checkStatus } from '../endpointCalls';
+import './index.css';
 
 const PlayerStatus = () => {
   const playerState = {
-    name: "",
+    name: '',
     cooldown: 0,
     encumbrance: 0,
     strength: 0,
     speed: 0,
     gold: 0,
-    bodywear: "",
-    footwear: "",
+    bodywear: '',
+    footwear: '',
     inventory: [],
     status: [],
     errors: [],
-    messages: []
+    messages: [],
   };
   const [playerStatus, setPlayerStatus] = useState(playerState);
   const onRefreshPlayerStatus = () => {
@@ -45,7 +46,7 @@ const PlayerStatus = () => {
           inventory: inventory,
           status: status,
           errors: errors,
-          messages: messages
+          messages: messages,
         });
       })
       .catch(err => console.log(err));
@@ -54,18 +55,20 @@ const PlayerStatus = () => {
     <>
       <div>
         <h3>Player Status/Inventory</h3>
-        <button type="button" onClick={onRefreshPlayerStatus}>
+        <button type='button' onClick={onRefreshPlayerStatus}>
           Refresh Player Status
         </button>
-        <p>Name: {playerStatus.name}</p>
-        <p>Cooldown: {playerStatus.cooldown}</p>
-        <p>Encumbrance: {playerStatus.encumbrance}</p>
-        <p>Strength: {playerStatus.strength}</p>
-        <p>Speed: {playerStatus.speed}</p>
-        <p>Gold: {playerStatus.gold}</p>
-        <p>Bodywear: {playerStatus.bodywear}</p>
-        <p>Footwear: {playerStatus.footwear}</p>
-        <p>Inventory: {playerStatus.inventory}</p>
+        <div className='attributes'>
+          <p>Name: {playerStatus.name}</p>
+          <p>Cooldown: {playerStatus.cooldown}</p>
+          <p>Encumbrance: {playerStatus.encumbrance}</p>
+          <p>Strength: {playerStatus.strength}</p>
+          <p>Speed: {playerStatus.speed}</p>
+          <p>Gold: {playerStatus.gold}</p>
+          <p>Bodywear: {playerStatus.bodywear}</p>
+          <p>Footwear: {playerStatus.footwear}</p>
+          <p>Inventory: {playerStatus.inventory}</p>
+        </div>
       </div>
     </>
   );

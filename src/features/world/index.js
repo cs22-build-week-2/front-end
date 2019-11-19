@@ -2,7 +2,7 @@ import React from 'react';
 import Player from '../player';
 import Map from '../map';
 import axios from 'axios';
-import axiosWithAuth from "../../axiosWithAuth";
+import axiosWithAuth from '../../axiosWithAuth';
 
 var _ = require('lodash');
 
@@ -113,9 +113,6 @@ class World extends React.Component {
           current_room={this.state.current_room}
         />
         <Player />
-
-        <div onClick={this.logOut}>LOGOUT</div>
-        <div>No map? Refresh the browser!</div>
       </div>
     );
   }

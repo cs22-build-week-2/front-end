@@ -1,0 +1,11 @@
+.attributes {
+  display: flex;
+}
+
+p {
+  padding: 5px;
+}
+
+.room-status {
+  display: flex;
+}
