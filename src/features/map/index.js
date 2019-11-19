@@ -1,42 +1,42 @@
-import React from "react";
-import { connect } from "react-redux";
-import { SPRITE_SIZE } from "../../config/constants";
+import React from 'react';
+import { connect } from 'react-redux';
+import { SPRITE_SIZE } from '../../config/constants';
 
-import "./styles.css";
+import './styles.css';
 
 function getTileSprite(type) {
   switch (type) {
-    case "new_room":
-      return "grass";
+    case 'new_room':
+      return 'grass';
     case 5:
-      return "rock";
-    case "Exit":
-      return "tree";
-    case "start_room":
-      return "castle";
+      return 'rock';
+    case 'Exit':
+      return 'tree';
+    case 'start_room':
+      return 'castle';
     default:
-      console.log("");
+      console.log('');
   }
 }
 
 function MapTile(props) {
-  let borderRight = props.tile.e_to === 0 ? "2px solid black" : "None";
-  let borderLeft = props.tile.w_to === 0 ? "2px solid black" : "None";
-  let borderTop = props.tile.n_to === 0 ? "2px solid black" : "None";
-  let borderBottom = props.tile.s_to === 0 ? "2px solid black" : "None";
+  let borderRight = props.tile.e_to === 0 ? '2px solid black' : 'None';
+  let borderLeft = props.tile.w_to === 0 ? '2px solid black' : 'None';
+  let borderTop = props.tile.n_to === 0 ? '2px solid black' : 'None';
+  let borderBottom = props.tile.s_to === 0 ? '2px solid black' : 'None';
   // let backgroundColor = props.current_room === props.tile.id ? "blue" : "green";
   // console.log(props.current_room, "cur room props");
   return (
     <div
       className={`tile ${getTileSprite(props.title)}`}
       style={{
-        boxSizing: "border-box",
+        boxSizing: 'border-box',
         height: SPRITE_SIZE,
         width: SPRITE_SIZE,
         borderRight: borderRight,
         borderLeft: borderLeft,
         borderTop: borderTop,
-        borderBottom: borderBottom
+        borderBottom: borderBottom,
         // backgroundColor: backgroundColor
       }}
     />
@@ -46,7 +46,7 @@ function MapTile(props) {
 function MapRow(props) {
   // console.log(props.current_room, "mapROW");
   return (
-    <div className="row" style={{ height: SPRITE_SIZE }}>
+    <div className='row' style={{ height: SPRITE_SIZE }}>
       {props.tiles.map(tile => (
         <MapTile
           title={tile.title}
@@ -61,18 +61,17 @@ function MapRow(props) {
 class Map extends React.Component {
   render() {
     // console.log("Map props", this.props.tiles);
-    console.log(this.props.current_room, "MAP PROPS");
+    // console.log(this.props.current_room, "MAP PROPS");
     return (
       <div
         style={{
-          position: "relative",
-          top: "0px",
-          left: "0px",
-          width: "1000px",
-          height: "400px",
-          border: "4px solid white"
-        }}
-      >
+          position: 'relative',
+          top: '0px',
+          left: '0px',
+          width: '1000px',
+          height: '400px',
+          border: '4px solid white',
+        }}>
         {this.props.tiles &&
           this.props.tiles.map(row => (
             <MapRow tiles={row} current_room={this.props.current_room} /> // 10 rows

@@ -22,23 +22,23 @@ class World extends React.Component {
   };
 
   componentDidMount() {
-    axiosWithAuth()
-      .get('https://css22-9.herokuapp.com/api/adv/init/')
-      // .get("https://lambda-mud-test.herokuapp.com/api/adv/init")
-      .then(res => {
-        // console.log('INIT RES', res);
-        this.setState({
-          id: res.data.uuid,
-          name: res.data.name,
-          title: res.data.title,
-          description: res.data.description,
-          players: res.data.players,
-          current_room: res.data.current_room,
-        });
-      })
-      .catch(err => {
-        console.log(`Init ERR ${err}`);
-      });
+    // axiosWithAuth()
+    //   .get('https://css22-9.herokuapp.com/api/adv/init/')
+    //   // .get("https://lambda-mud-test.herokuapp.com/api/adv/init")
+    //   .then(res => {
+    //     // console.log('INIT RES', res);
+    //     this.setState({
+    //       id: res.data.uuid,
+    //       name: res.data.name,
+    //       title: res.data.title,
+    //       description: res.data.description,
+    //       players: res.data.players,
+    //       current_room: res.data.current_room,
+    //     });
+    //   })
+    //   .catch(err => {
+    //     console.log(`Init ERR ${err}`);
+    //   });
     // this.getData();
   }
 
