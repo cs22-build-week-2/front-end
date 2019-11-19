@@ -9,3 +9,17 @@ p {
 .room-status {
   display: flex;
 }
+
+.api-key {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.api-key div {
+  margin-right: 10px;
+}
+
+.current-key {
+  display: flex;
+}
