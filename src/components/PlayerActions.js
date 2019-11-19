@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import {
   checkItemOrPlayer,
   wearEquipment,
-  unwearEquipment,
-  pickupTreasure
+  unwearEquipment
 } from "../endpointCalls";
 import ItemOrPlayerStatus from "./ItemOrPlayerStatus";
 
-const PlayerActions = ({ changeRoomInfo, setRoomCooldown, roomCooldown }) => {
+const PlayerActions = ({ setRoomCooldown, roomCooldown }) => {
   const [itemOrPlayer, setItemOrPlayer] = useState("");
   const [wearEquipmentS, setWearEquipment] = useState("");
   const [unwearEquipmentS, setUnwearEquipment] = useState("");
@@ -63,16 +62,6 @@ const PlayerActions = ({ changeRoomInfo, setRoomCooldown, roomCooldown }) => {
       .catch(err => console.log(err));
   };
 
-  const submitPickupTreasure = event => {
-    event.preventDefault();
-    pickupTreasure({ name: itemOrPlayer })
-      .then(res => {
-        changeRoomInfo(res.data);
-        setItemOrPlayer("");
-      })
-      .catch(err => console.log(err));
-  };
-
   return (
     <>
       <form>
@@ -89,13 +78,6 @@ const PlayerActions = ({ changeRoomInfo, setRoomCooldown, roomCooldown }) => {
           disabled={roomCooldown}
         >
           Check Item or Player
-        </button>
-        <button
-          type="submit"
-          onClick={event => submitPickupTreasure(event)}
-          disabled={roomCooldown}
-        >
-          Pick Up Treasure
         </button>
       </form>
       <form>

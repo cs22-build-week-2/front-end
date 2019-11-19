@@ -11,15 +11,14 @@ export const move = direction => {
 
 // {"name":"treasure"}
 export const pickupTreasure = nameOfTreasure => {
-  return axiosWithAuth().post("/adv/take/", nameOfTreasure);
+  const treasure = { name: nameOfTreasure };
+  return axiosWithAuth().post("/adv/take/", treasure);
 };
 
 // {"name":"treasure"}
 export const dropTreasure = nameOfTreasure => {
-  axiosWithAuth()
-    .post("/adv/drop/", nameOfTreasure)
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  const treasure = { name: nameOfTreasure };
+  return axiosWithAuth().post("/adv/drop/", treasure);
 };
 
 export const checkStatus = () => {
@@ -97,10 +96,8 @@ export const transmogrifyLambdaCoins = nameOfItem => {
 
 // {"name":"treasure"}
 export const sellTreasure = nameOfTreasure => {
-  axiosWithAuth()
-    .post("/adv/sell/")
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  const treasure = { name: nameOfTreasure };
+  return axiosWithAuth().post("/adv/sell/", treasure);
 };
 
 // {"name":"treasure", "confirm":"yes"}
