@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { checkStatus } from "../endpointCalls";
+import React, { useState, useEffect } from 'react';
+import { checkStatus } from '../endpointCalls';
 
 const PlayerStatus = () => {
   const playerState = {
-    name: "",
+    name: '',
     cooldown: 0,
     encumbrance: 0,
     strength: 0,
     speed: 0,
     gold: 0,
-    bodywear: "",
-    footwear: "",
+    bodywear: '',
+    footwear: '',
     inventory: [],
     status: [],
     errors: [],
@@ -67,7 +67,7 @@ const PlayerStatus = () => {
       <div>
         <h3>Player Status/Inventory</h3>
         <button
-          type="button"
+          type='button'
           onClick={onRefreshPlayerStatus}
           disabled={playerCooldown}
         >

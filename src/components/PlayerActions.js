@@ -1,26 +1,26 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   checkItemOrPlayer,
   wearEquipment,
   unwearEquipment
-} from "../endpointCalls";
-import ItemOrPlayerStatus from "./ItemOrPlayerStatus";
+} from '../endpointCalls';
+import ItemOrPlayerStatus from './ItemOrPlayerStatus';
 
 const PlayerActions = ({ setRoomCooldown, roomCooldown }) => {
-  const [itemOrPlayer, setItemOrPlayer] = useState("");
-  const [wearEquipmentS, setWearEquipment] = useState("");
-  const [unwearEquipmentS, setUnwearEquipment] = useState("");
+  const [itemOrPlayer, setItemOrPlayer] = useState('');
+  const [wearEquipmentS, setWearEquipment] = useState('');
+  const [unwearEquipmentS, setUnwearEquipment] = useState('');
   const [itemOrPlayerData, setItemOrPlayerData] = useState({
-    attributes: "",
-    description: "",
-    exp: "",
-    itemtype: "",
-    level: "",
-    name: "",
-    weight: "",
-    errors: "",
-    messages: "",
-    cooldown: ""
+    attributes: '',
+    description: '',
+    exp: '',
+    itemtype: '',
+    level: '',
+    name: '',
+    weight: '',
+    errors: '',
+    messages: '',
+    cooldown: ''
   });
 
   const onItemOrPlayerChange = event => {
@@ -43,7 +43,7 @@ const PlayerActions = ({ setRoomCooldown, roomCooldown }) => {
         const messages = JSON.stringify(res.data.messages);
         setItemOrPlayerData({ ...res.data, errors, messages });
         setRoomCooldown(Math.round(res.data.cooldown));
-        setItemOrPlayer("");
+        setItemOrPlayer('');
       })
       .catch(err => console.log(err));
   };
@@ -66,14 +66,14 @@ const PlayerActions = ({ setRoomCooldown, roomCooldown }) => {
     <>
       <form>
         <input
-          name="itemOrPlayer"
-          placeholder="Check Item or Player"
+          name='itemOrPlayer'
+          placeholder='Check Item or Player'
           onChange={onItemOrPlayerChange}
           value={itemOrPlayer}
           disabled={roomCooldown}
         />
         <button
-          type="submit"
+          type='submit'
           onClick={event => submitItemOrPlayer(event)}
           disabled={roomCooldown}
         >
@@ -82,14 +82,14 @@ const PlayerActions = ({ setRoomCooldown, roomCooldown }) => {
       </form>
       <form>
         <input
-          name="wearEquipment"
-          placeholder="Type Equipment to wear"
+          name='wearEquipment'
+          placeholder='Type Equipment to wear'
           onChange={onWearEquipmentChange}
           value={wearEquipmentS}
           disabled={roomCooldown}
         />
         <button
-          type="submit"
+          type='submit'
           onClick={event => submitWearEquipment(event)}
           disabled={roomCooldown}
         >
@@ -98,14 +98,14 @@ const PlayerActions = ({ setRoomCooldown, roomCooldown }) => {
       </form>
       <form>
         <input
-          name="unwearEquipment"
-          placeholder="Type Equipment to take off"
+          name='unwearEquipment'
+          placeholder='Type Equipment to take off'
           onChange={onUnwearEquipmentChange}
           value={unwearEquipmentS}
           disabled={roomCooldown}
         />
         <button
-          type="submit"
+          type='submit'
           onClick={event => submitUnwearEquipment(event)}
           disabled={roomCooldown}
         >

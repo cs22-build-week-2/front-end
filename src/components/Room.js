@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   initialize,
   move,
   pickupTreasure,
   dropTreasure,
   sellTreasure
-} from "../endpointCalls";
-import PlayerActions from "./PlayerActions";
+} from '../endpointCalls';
+import PlayerActions from './PlayerActions';
 
 const Room = () => {
   const roomState = {
     room_id: 0,
-    title: "",
-    description: "",
-    coordinates: "",
+    title: '',
+    description: '',
+    coordinates: '',
     exits: [],
     cooldown: 0,
     errors: [],
@@ -22,8 +22,8 @@ const Room = () => {
 
   const [roomCooldown, setRoomCooldown] = useState(0);
   const [roomInfo, setRoomInfo] = useState(roomState);
-  const [roomId, setRoomId] = useState("");
-  const [itemChange, setItemChange] = useState({ nameOfItem: "" });
+  const [roomId, setRoomId] = useState('');
+  const [itemChange, setItemChange] = useState({ nameOfItem: '' });
 
   useEffect(() => {
     initialize()
@@ -63,7 +63,7 @@ const Room = () => {
   const onMoveButton = direction => {
     let moveObject = { direction };
     if (roomId) {
-      moveObject["next_room_id"] = roomId;
+      moveObject['next_room_id'] = roomId;
     }
     move(moveObject)
       .then(res => {
@@ -80,7 +80,7 @@ const Room = () => {
     const errors = JSON.stringify(roomData.errors);
     setRoomInfo({ ...roomData, exits, items, messages, players, errors });
     setRoomCooldown(Math.round(roomData.cooldown));
-    setRoomId("");
+    setRoomId('');
   };
 
   const onRoomIdChange = event => {
@@ -97,7 +97,7 @@ const Room = () => {
       .then(res => {
         changeRoomInfo(res.data);
         setRoomCooldown(Math.round(res.data.cooldown));
-        setItemChange({ ...itemChange, nameOfItem: "" });
+        setItemChange({ ...itemChange, nameOfItem: '' });
       })
       .catch(err => console.log(err));
   };
@@ -108,7 +108,7 @@ const Room = () => {
       .then(res => {
         changeRoomInfo(res.data);
         setRoomCooldown(Math.round(res.data.cooldown));
-        setItemChange({ ...itemChange, nameOfItem: "" });
+        setItemChange({ ...itemChange, nameOfItem: '' });
       })
       .catch(err => console.log(err));
   };
@@ -117,7 +117,7 @@ const Room = () => {
     e.preventDefault();
     sellTreasure(itemChange.nameOfItem)
       .then(res => {
-        console.log("Item Sold response", res.data);
+        console.log('Item Sold response', res.data);
         let room_id = res.data.room_id;
         let title = res.data.title;
         let description = res.data.description;
@@ -156,9 +156,9 @@ const Room = () => {
         <div>
           <form onSubmit={submitItemPickup}>
             <input
-              type="text"
-              name="nameOfItem"
-              placeholder="Add or drop items here"
+              type='text'
+              name='nameOfItem'
+              placeholder='Add or drop items here'
               onChange={onItemChange}
               value={itemChange.nameOfItem}
               disabled={roomCooldown}
@@ -184,36 +184,36 @@ const Room = () => {
           </form>
           <h3>Move Buttons</h3>
           <input
-            name="roomId"
-            placeholder="If you know the Room ID, input here!"
+            name='roomId'
+            placeholder='If you know the Room ID, input here!'
             onChange={onRoomIdChange}
             value={roomId}
             disabled={roomCooldown}
           />
           <button
-            type="button"
-            onClick={() => onMoveButton("n")}
+            type='button'
+            onClick={() => onMoveButton('n')}
             disabled={roomCooldown}
           >
             Up
           </button>
           <button
-            type="button"
-            onClick={() => onMoveButton("s")}
+            type='button'
+            onClick={() => onMoveButton('s')}
             disabled={roomCooldown}
           >
             Down
           </button>
           <button
-            type="button"
-            onClick={() => onMoveButton("w")}
+            type='button'
+            onClick={() => onMoveButton('w')}
             disabled={roomCooldown}
           >
             Left
           </button>
           <button
-            type="button"
-            onClick={() => onMoveButton("e")}
+            type='button'
+            onClick={() => onMoveButton('e')}
             disabled={roomCooldown}
           >
             Right

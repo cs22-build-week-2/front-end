@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const ItemOrPlayerStatus = ({ data }) => {
   // need to set cooldown
