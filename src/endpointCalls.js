@@ -11,10 +11,7 @@ export const move = direction => {
 
 // {"name":"treasure"}
 export const pickupTreasure = nameOfTreasure => {
-  axiosWithAuth()
-    .post("/adv/take/", nameOfTreasure)
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  return axiosWithAuth().post("/adv/take/", nameOfTreasure);
 };
 
 // {"name":"treasure"}
@@ -26,31 +23,22 @@ export const dropTreasure = nameOfTreasure => {
 };
 
 export const checkStatus = () => {
-  return axiosWithAuth().post("/adv/status/")
+  return axiosWithAuth().post("/adv/status/");
 };
 
 // {"name":"[NAME OF ITEM OR PLAYER]"}
 export const checkItemOrPlayer = nameOfItemOrPlayer => {
-  axiosWithAuth()
-    .post("/adv/examine/", nameOfItemOrPlayer)
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  return axiosWithAuth().post("/adv/examine/", nameOfItemOrPlayer);
 };
 
 // {"name":"[NAME OF WEARABLE]"}
 export const wearEquipment = nameOfEquipment => {
-  axiosWithAuth()
-    .post("/adv/wear/")
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  return axiosWithAuth().post("/adv/wear/", nameOfEquipment);
 };
 
 // {"name":"[NAME OF WEARABLE]"}
 export const unwearEquipment = nameOfEquipment => {
-  axiosWithAuth()
-    .post("/adv/undress/")
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  return axiosWithAuth().post("/adv/undress/", nameOfEquipment);
 };
 
 // {"direction":"n"}
@@ -100,12 +88,12 @@ export const transmogrifyLambdaCoins = nameOfItem => {
 };
 
 // {"direction":"s", "next_room_id": "0"}
-export const wiseMove = directionId => {
-  axiosWithAuth()
-    .post("/adv/move/")
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
-};
+// export const wiseMove = directionId => {
+//   axiosWithAuth()
+//     .post("/adv/move/")
+//     .then(res => console.log(res))
+//     .catch(err => console.log(err));
+// };
 
 // {"name":"treasure"}
 export const sellTreasure = nameOfTreasure => {

@@ -12,6 +12,7 @@ const Room = () => {
     errors: [],
     messages: []
   };
+
   const [roomCooldown, setRoomCooldown] = useState(0);
   const [roomInfo, setRoomInfo] = useState(roomState);
   const [roomId, setRoomId] = useState("");
@@ -33,7 +34,7 @@ const Room = () => {
           title: title,
           description: description,
           coordinates: coordinates,
-          exits: exits,
+          exits: JSON.stringify(exits),
           roomCooldown: room_cooldown,
           errors: errors,
           messages: messages
@@ -50,6 +51,7 @@ const Room = () => {
     }, 1000);
     return () => clearTimeout(timer);
   }, [roomCooldown]);
+
   const onMoveButton = direction => {
     let moveObject = { direction };
     if (roomId) {
@@ -57,7 +59,12 @@ const Room = () => {
     }
     move(moveObject)
       .then(res => {
-        setRoomInfo(res.data);
+        const exits = JSON.stringify(res.data.exits);
+        const items = JSON.stringify(res.data.items);
+        const messages = JSON.stringify(res.data.messages);
+        const players = JSON.stringify(res.data.players);
+        const errors = JSON.stringify(res.data.errors);
+        setRoomInfo({ ...res.data, exits, items, messages, players, errors });
         setRoomCooldown(Math.round(res.data.cooldown));
         setRoomId("");
       })
@@ -67,6 +74,7 @@ const Room = () => {
   const onRoomIdChange = event => {
     setRoomId(event.target.value);
   };
+
   return (
     <>
       <div>
@@ -78,6 +86,11 @@ const Room = () => {
           <p>Room ID: {roomInfo.room_id}</p>
           <p>Exits: {roomInfo.exits}</p>
           <p>Items: {roomInfo.items}</p>
+          <p>Messages: {roomInfo.messages}</p>
+          <p>Players: {roomInfo.players}</p>
+          <p>Elevation: {roomInfo.elevation}</p>
+          <p>Terrain: {roomInfo.terrain}</p>
+          <p>Errors: {roomInfo.errors}</p>
         </div>
         <div>
           <h3>Move Buttons</h3>
