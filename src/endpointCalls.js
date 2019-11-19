@@ -1,23 +1,17 @@
 import { axiosWithAuth } from "./axiosWithAuth";
 
 export const initialize = () => {
-  axiosWithAuth
-    .get("/adv/init/")
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  return axiosWithAuth().get("/adv/init/");
 };
 
 // {"direction":"n"}
 export const move = direction => {
-  axiosWithAuth
-    .post("/adv/move/", direction)
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  return axiosWithAuth().post("/adv/move/", direction);
 };
 
 // {"name":"treasure"}
 export const pickupTreasure = nameOfTreasure => {
-  axiosWithAuth
+  axiosWithAuth()
     .post("/adv/take/", nameOfTreasure)
     .then(res => console.log(res))
     .catch(err => console.log(err));
@@ -25,14 +19,14 @@ export const pickupTreasure = nameOfTreasure => {
 
 // {"name":"treasure"}
 export const dropTreasure = nameOfTreasure => {
-  axiosWithAuth
+  axiosWithAuth()
     .post("/adv/drop/", nameOfTreasure)
     .then(res => console.log(res))
     .catch(err => console.log(err));
 };
 
 export const checkStatus = () => {
-  axiosWithAuth
+  axiosWithAuth()
     .post("/adv/status/")
     .then(res => console.log(res))
     .catch(err => console.log(err));
@@ -40,7 +34,7 @@ export const checkStatus = () => {
 
 // {"name":"[NAME OF ITEM OR PLAYER]"}
 export const checkItemOrPlayer = nameOfItemOrPlayer => {
-  axiosWithAuth
+  axiosWithAuth()
     .post("/adv/examine/", nameOfItemOrPlayer)
     .then(res => console.log(res))
     .catch(err => console.log(err));
@@ -48,7 +42,7 @@ export const checkItemOrPlayer = nameOfItemOrPlayer => {
 
 // {"name":"[NAME OF WEARABLE]"}
 export const wearEquipment = nameOfEquipment => {
-  axiosWithAuth
+  axiosWithAuth()
     .post("/adv/wear/")
     .then(res => console.log(res))
     .catch(err => console.log(err));
@@ -56,7 +50,7 @@ export const wearEquipment = nameOfEquipment => {
 
 // {"name":"[NAME OF WEARABLE]"}
 export const unwearEquipment = nameOfEquipment => {
-  axiosWithAuth
+  axiosWithAuth()
     .post("/adv/undress/")
     .then(res => console.log(res))
     .catch(err => console.log(err));
@@ -64,7 +58,7 @@ export const unwearEquipment = nameOfEquipment => {
 
 // {"direction":"n"}
 export const flyToDirection = direction => {
-  axiosWithAuth
+  axiosWithAuth()
     .post("/adv/fly/")
     .then(res => console.log(res))
     .catch(err => console.log(err));
@@ -72,7 +66,7 @@ export const flyToDirection = direction => {
 
 // {"direction":"n", "num_rooms":"5", "next_room_ids":"10,19,20,63,72"}
 export const dashToRoom = path => {
-  axiosWithAuth
+  axiosWithAuth()
     .post("/adv/dash/")
     .then(res => console.log(res))
     .catch(err => console.log(err));
@@ -80,21 +74,21 @@ export const dashToRoom = path => {
 
 // {"name":"[ITEM_NAME]"}
 export const giveGhostItem = nameOfItem => {
-  axiosWithAuth
+  axiosWithAuth()
     .post("/adv/carry/")
     .then(res => console.log(res))
     .catch(err => console.log(err));
 };
 
 export const takeGhostItem = () => {
-  axiosWithAuth
+  axiosWithAuth()
     .post("/adv/receive")
     .then(res => console.log(res))
     .catch(err => console.log(err));
 };
 
 export const seeLambdaCoinBalance = () => {
-  axiosWithAuth
+  axiosWithAuth()
     .get("/bc/get_balance/")
     .then(res => console.log(res))
     .catch(err => console.log(err));
@@ -102,7 +96,7 @@ export const seeLambdaCoinBalance = () => {
 
 // {"name":"[NAME OF ITEM]"}
 export const transmogrifyLambdaCoins = nameOfItem => {
-  axiosWithAuth
+  axiosWithAuth()
     .post("/adv/transmogrify")
     .then(res => console.log(res))
     .catch(err => console.log(err));
@@ -110,7 +104,7 @@ export const transmogrifyLambdaCoins = nameOfItem => {
 
 // {"direction":"s", "next_room_id": "0"}
 export const wiseMove = directionId => {
-  axiosWithAuth
+  axiosWithAuth()
     .post("/adv/move/")
     .then(res => console.log(res))
     .catch(err => console.log(err));
@@ -118,7 +112,7 @@ export const wiseMove = directionId => {
 
 // {"name":"treasure"}
 export const sellTreasure = nameOfTreasure => {
-  axiosWithAuth
+  axiosWithAuth()
     .post("/adv/sell/")
     .then(res => console.log(res))
     .catch(err => console.log(err));
@@ -126,7 +120,7 @@ export const sellTreasure = nameOfTreasure => {
 
 // {"name":"treasure", "confirm":"yes"}
 export const confirmSellTreasure = confirm => {
-  axiosWithAuth
+  axiosWithAuth()
     .post("/adv/sell/")
     .then(res => console.log(res))
     .catch(err => console.log(err));
@@ -134,14 +128,14 @@ export const confirmSellTreasure = confirm => {
 
 // {"name":"[NEW NAME]"}
 export const changeName = name => {
-  axiosWithAuth
+  axiosWithAuth()
     .post("/adv/change_name/")
     .then(res => console.log(res))
     .catch(err => console.log(err));
 };
 
 export const pray = () => {
-  axiosWithAuth
+  axiosWithAuth()
     .post("/adv/pray/")
     .then(res => console.log(res))
     .catch(err => console.log(err));
@@ -149,14 +143,14 @@ export const pray = () => {
 
 // {"proof":new_proof}
 export const mineCoin = proof => {
-  axiosWithAuth
+  axiosWithAuth()
     .post("/bc/mine/")
     .then(res => console.log(res))
     .catch(err => console.log(err));
 };
 
 export const getLastProof = () => {
-  axiosWithAuth
+  axiosWithAuth()
     .get("/bc/last_proof")
     .then(res => console.log(res))
     .catch(err => console.log(err));
