@@ -26,10 +26,7 @@ export const dropTreasure = nameOfTreasure => {
 };
 
 export const checkStatus = () => {
-  axiosWithAuth()
-    .post("/adv/status/")
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  return axiosWithAuth().post("/adv/status/")
 };
 
 // {"name":"[NAME OF ITEM OR PLAYER]"}
