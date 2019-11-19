@@ -93,9 +93,15 @@ const Room = () => {
     setItemChange({ [event.target.name]: event.target.value });
   };
 
-  const submitItemPickup = e => {
+  const submitItemPickup = (e, item = '') => {
     e.preventDefault();
-    pickupTreasure(itemChange.nameOfItem)
+    let pickUpThisItem;
+    if (item) {
+      pickUpThisItem = e.target.value;
+    } else {
+      pickUpThisItem = itemChange.nameOfItem;
+    }
+    pickupTreasure(pickUpThisItem)
       .then(res => {
         changeRoomInfo(res.data);
         setRoomCooldown(Math.round(res.data.cooldown));
@@ -151,9 +157,10 @@ const Room = () => {
             {roomInfo.items &&
               roomInfo.items.map(item => (
                 <button
+                  key={item}
                   name='nameOfItem'
                   value={item}
-                  onClick={event => onItemChange(event)}
+                  onClick={event => submitItemPickup(event, true)}
                   disabled={roomCooldown}
                 >
                   {item}
@@ -194,6 +201,8 @@ const Room = () => {
               Confirm Sell Item
             </button>
           </form>
+          <p>Elevation: {roomInfo.elevation}</p>
+          <p>Terrain: {roomInfo.terrain}</p>
           <p>Players: {roomInfo.players}</p>
           <p>Messages: {roomInfo.messages}</p>
           <p>Errors: {roomInfo.errors}</p>
