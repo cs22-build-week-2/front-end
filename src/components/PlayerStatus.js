@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { checkStatus } from "../endpointCalls";
 
 const PlayerStatus = () => {
@@ -17,6 +17,17 @@ const PlayerStatus = () => {
     messages: []
   };
   const [playerStatus, setPlayerStatus] = useState(playerState);
+  const [playerCooldown, setPlayerCooldown] = useState(0);
+
+  useEffect(() => {
+    const timer = setTimeout(function() {
+      if (playerCooldown > 0) {
+        setPlayerCooldown(playerCooldown - 1);
+      }
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [playerCooldown]);
+
   const onRefreshPlayerStatus = () => {
     checkStatus()
       .then(res => {
@@ -47,6 +58,7 @@ const PlayerStatus = () => {
           errors: errors,
           messages: messages
         });
+        setPlayerCooldown(cooldown);
       })
       .catch(err => console.log(err));
   };
@@ -54,7 +66,11 @@ const PlayerStatus = () => {
     <>
       <div>
         <h3>Player Status/Inventory</h3>
-        <button type="button" onClick={onRefreshPlayerStatus}>
+        <button
+          type="button"
+          onClick={onRefreshPlayerStatus}
+          disabled={playerCooldown}
+        >
           Refresh Player Status
         </button>
         <p>Name: {playerStatus.name}</p>
@@ -66,6 +82,8 @@ const PlayerStatus = () => {
         <p>Bodywear: {playerStatus.bodywear}</p>
         <p>Footwear: {playerStatus.footwear}</p>
         <p>Inventory: {playerStatus.inventory}</p>
+        <h5>Player Cooldown</h5>
+        <p>{playerCooldown}</p>
       </div>
     </>
   );
