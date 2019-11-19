@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { checkStatus } from '../endpointCalls';
+import { checkStatus, confirmSellTreasure } from '../endpointCalls';
 
-const PlayerStatus = () => {
+const PlayerStatus = ({ changeRoomInfo }) => {
   const playerState = {
     name: '',
     cooldown: 0,
@@ -53,7 +53,7 @@ const PlayerStatus = () => {
           gold: gold,
           bodywear: bodywear,
           footwear: footwear,
-          inventory: JSON.stringify(inventory),
+          inventory: inventory,
           status: JSON.stringify(status),
           errors: JSON.stringify(errors),
           messages: JSON.stringify(messages)
@@ -62,6 +62,16 @@ const PlayerStatus = () => {
       })
       .catch(err => console.log(err));
   };
+
+  const submitConfirmSellItem = event => {
+    event.preventDefault();
+    confirmSellTreasure(event.target.value)
+      .then(res => {
+        changeRoomInfo(res.data);
+      })
+      .catch(err => console.log(err));
+  };
+
   return (
     <>
       <div>
@@ -81,7 +91,19 @@ const PlayerStatus = () => {
         <p>Gold: {playerStatus.gold}</p>
         <p>Bodywear: {playerStatus.bodywear}</p>
         <p>Footwear: {playerStatus.footwear}</p>
-        <p>Inventory: {playerStatus.inventory}</p>
+        <p>
+          Inventory:{' '}
+          {playerStatus.inventory.map(item => (
+            <button
+              type='button'
+              value={item}
+              onClick={event => submitConfirmSellItem(event)}
+              disabled={playerCooldown}
+            >
+              {item}
+            </button>
+          ))}
+        </p>
         <h5>Player Cooldown</h5>
         <p>{playerCooldown}</p>
       </div>

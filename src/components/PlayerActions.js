@@ -113,7 +113,7 @@ const PlayerActions = ({ setRoomCooldown, roomCooldown }) => {
           Take Off Equipment
         </button>
       </form>
-      <ItemOrPlayerStatus data={itemOrPlayerData} />
+      {/* <ItemOrPlayerStatus data={itemOrPlayerData} /> */}
     </>
   );
 };
