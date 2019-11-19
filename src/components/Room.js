@@ -4,7 +4,8 @@ import {
   move,
   pickupTreasure,
   dropTreasure,
-  sellTreasure
+  sellTreasure,
+  confirmSellTreasure
 } from '../endpointCalls';
 import PlayerActions from './PlayerActions';
 
@@ -17,7 +18,9 @@ const Room = () => {
     exits: [],
     cooldown: 0,
     errors: [],
-    messages: []
+    messages: [],
+    items: [],
+    players: []
   };
 
   const [roomCooldown, setRoomCooldown] = useState(0);
@@ -74,11 +77,10 @@ const Room = () => {
 
   const changeRoomInfo = roomData => {
     const exits = JSON.stringify(roomData.exits);
-    const items = JSON.stringify(roomData.items);
     const messages = JSON.stringify(roomData.messages);
     const players = JSON.stringify(roomData.players);
     const errors = JSON.stringify(roomData.errors);
-    setRoomInfo({ ...roomData, exits, items, messages, players, errors });
+    setRoomInfo({ ...roomData, exits, messages, players, errors });
     setRoomCooldown(Math.round(roomData.cooldown));
     setRoomId('');
   };
@@ -117,26 +119,19 @@ const Room = () => {
     e.preventDefault();
     sellTreasure(itemChange.nameOfItem)
       .then(res => {
-        console.log('Item Sold response', res.data);
-        let room_id = res.data.room_id;
-        let title = res.data.title;
-        let description = res.data.description;
-        let coordinates = res.data.coordinates;
-        let exits = res.data.exits;
-        let room_cooldown = res.data.roomCooldown;
-        let errors = res.data.errors;
-        let messages = res.data.messages;
+        changeRoomInfo(res.data);
+        setRoomCooldown(Math.round(res.data.cooldown));
+      })
+      .catch(err => console.log(err));
+  };
 
-        setRoomInfo({
-          room_id: room_id,
-          title: title,
-          description: description,
-          coordinates: coordinates,
-          exits: exits,
-          roomCooldown: room_cooldown,
-          errors: errors,
-          messages: messages
-        });
+  const submitConfirmSellItem = event => {
+    event.preventDefault();
+    confirmSellTreasure(itemChange.nameOfItem)
+      .then(res => {
+        changeRoomInfo(res.data);
+        setRoomCooldown(Math.round(res.data.cooldown));
+        setItemChange({ ...itemChange, nameOfItem: '' });
       })
       .catch(err => console.log(err));
   };
@@ -151,9 +146,20 @@ const Room = () => {
           <p>Coordinates: {roomInfo.coordinates}</p>
           <p>Room ID: {roomInfo.room_id}</p>
           <p>Exits: {roomInfo.exits}</p>
-          <p>Items: {roomInfo.items}</p>
-        </div>
-        <div>
+          <p>
+            Items:{' '}
+            {roomInfo.items &&
+              roomInfo.items.map(item => (
+                <button
+                  name='nameOfItem'
+                  value={item}
+                  onClick={event => onItemChange(event)}
+                  disabled={roomCooldown}
+                >
+                  {item}
+                </button>
+              ))}
+          </p>
           <form onSubmit={submitItemPickup}>
             <input
               type='text'
@@ -181,7 +187,18 @@ const Room = () => {
             >
               Sell Item
             </button>
+            <button
+              onClick={event => submitConfirmSellItem(event)}
+              disabled={roomCooldown}
+            >
+              Confirm Sell Item
+            </button>
           </form>
+          <p>Players: {roomInfo.players}</p>
+          <p>Messages: {roomInfo.messages}</p>
+          <p>Errors: {roomInfo.errors}</p>
+        </div>
+        <div>
           <h3>Move Buttons</h3>
           <input
             name='roomId'

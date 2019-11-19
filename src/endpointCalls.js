@@ -101,11 +101,9 @@ export const sellTreasure = nameOfTreasure => {
 };
 
 // {"name":"treasure", "confirm":"yes"}
-export const confirmSellTreasure = confirm => {
-  axiosWithAuth()
-    .post('/adv/sell/')
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+export const confirmSellTreasure = nameOfTreasure => {
+  const treasure = { name: nameOfTreasure, confirm: 'yes' };
+  return axiosWithAuth().post('/adv/sell/', treasure);
 };
 
 // {"name":"[NEW NAME]"}
