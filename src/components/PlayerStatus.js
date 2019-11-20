@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { checkStatus, confirmSellTreasure } from '../endpointCalls';
+import {
+  checkStatus,
+  confirmSellTreasure,
+  giveGhostItem,
+  takeGhostItem,
+  seeLambdaCoinBalance
+} from '../endpointCalls';
 
 const PlayerStatus = ({ changeRoomInfo }) => {
   const playerState = {
@@ -18,6 +24,20 @@ const PlayerStatus = ({ changeRoomInfo }) => {
   };
   const [playerStatus, setPlayerStatus] = useState(playerState);
   const [playerCooldown, setPlayerCooldown] = useState(0);
+  const [actionState, setActionState] = useState(true);
+  const [ghostItem, setGhostItem] = useState(false);
+  const [lambdaCoin, setLambdaCoin] = useState({
+    cooldown: 0,
+    errors: [],
+    messages: []
+  });
+
+  useEffect(() => {
+    if (localStorage.getItem('ghost')) {
+      setGhostItem(localStorage.getItem('ghost'));
+      setActionState(false);
+    }
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(function() {
@@ -66,10 +86,43 @@ const PlayerStatus = ({ changeRoomInfo }) => {
   const submitConfirmSellItem = event => {
     event.preventDefault();
     confirmSellTreasure(event.target.value)
+      .then(res => changeRoomInfo(res.data))
+      .catch(err => console.log(err));
+  };
+
+  const clickGiveGhostItem = event => {
+    giveGhostItem(event.target.value)
       .then(res => {
         changeRoomInfo(res.data);
+        setGhostItem(true);
+        localStorage.setItem('ghost', true);
       })
       .catch(err => console.log(err));
+  };
+
+  const clickTakeGhostItem = () => {
+    takeGhostItem()
+      .then(res => {
+        changeRoomInfo(res.data);
+        setGhostItem(false);
+        localStorage.setItem('ghost', false);
+      })
+      .catch(err => console.log(err));
+  };
+
+  const displayLambdaCoin = () => {
+    seeLambdaCoinBalance()
+      .then(res => {
+        const messages = JSON.stringify(res.data.messages);
+        const errors = JSON.stringify(res.data.errors);
+        setLambdaCoin({ ...res.data, messages, errors });
+        setPlayerCooldown(res.data.cooldown);
+      })
+      .catch(err => console.log);
+  };
+
+  const buttonStyles = {
+    backgroundColor: 'grey'
   };
 
   return (
@@ -82,6 +135,31 @@ const PlayerStatus = ({ changeRoomInfo }) => {
           disabled={playerCooldown}
         >
           Refresh Player Status
+        </button>
+        <button
+          type='button'
+          onClick={() => setActionState(true)}
+          style={actionState ? buttonStyles : null}
+          disabled={ghostItem}
+        >
+          Sell Items
+        </button>
+        <button
+          type='button'
+          onClick={() => setActionState(false)}
+          style={actionState ? null : buttonStyles}
+        >
+          Interact With Ghost
+        </button>
+        <button
+          type='button'
+          onClick={clickTakeGhostItem}
+          disabled={!ghostItem}
+        >
+          Take Item from Ghost
+        </button>
+        <button type='button' onClick={displayLambdaCoin}>
+          Display Lambda Coin
         </button>
         <p>Name: {playerStatus.name}</p>
         <p>Cooldown: {playerStatus.cooldown}</p>
@@ -97,13 +175,19 @@ const PlayerStatus = ({ changeRoomInfo }) => {
             <button
               type='button'
               value={item}
-              onClick={event => submitConfirmSellItem(event)}
-              disabled={playerCooldown}
+              onClick={event => {
+                actionState
+                  ? submitConfirmSellItem(event)
+                  : clickGiveGhostItem(event);
+              }}
+              disabled={playerCooldown || ghostItem}
             >
               {item}
             </button>
           ))}
         </p>
+        <p>Messages: {lambdaCoin.messages}</p>
+        <p>Errors: {lambdaCoin.errors}</p>
         <h5>Player Cooldown</h5>
         <p>{playerCooldown}</p>
       </div>

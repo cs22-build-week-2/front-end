@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Room from './components/Room';
 import ApiKey from './components/ApiKey';
 import PlayerStatus from './components/PlayerStatus';
+import Mine from './components/Mine';
 import { initialize } from './endpointCalls';
 
 function App() {
@@ -75,6 +76,7 @@ function App() {
         changeRoomInfo={changeRoomInfo}
       />
       <PlayerStatus changeRoomInfo={changeRoomInfo} />
+      <Mine />
     </div>
   );
 }

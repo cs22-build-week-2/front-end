@@ -42,48 +42,32 @@ export const unwearEquipment = nameOfEquipment => {
 
 // {"direction":"n"}
 export const flyToDirection = direction => {
-  axiosWithAuth()
-    .post('/adv/fly/')
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  return axiosWithAuth().post('/adv/fly/', direction);
 };
 
 // {"direction":"n", "num_rooms":"5", "next_room_ids":"10,19,20,63,72"}
 export const dashToRoom = path => {
-  axiosWithAuth()
-    .post('/adv/dash/')
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  let dashPath = { next_room_ids: path.room_path, direction: path.direction };
+  dashPath['num_rooms'] = path.room_path.split(',').length;
+  return axiosWithAuth().post('/adv/dash/', dashPath);
 };
 
 // {"name":"[ITEM_NAME]"}
 export const giveGhostItem = nameOfItem => {
-  axiosWithAuth()
-    .post('/adv/carry/')
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  return axiosWithAuth().post('/adv/carry/', { name: nameOfItem });
 };
 
 export const takeGhostItem = () => {
-  axiosWithAuth()
-    .post('/adv/receive')
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  return axiosWithAuth().post('/adv/receive');
 };
 
 export const seeLambdaCoinBalance = () => {
-  axiosWithAuth()
-    .get('/bc/get_balance/')
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  return axiosWithAuth().get('/bc/get_balance/');
 };
 
 // {"name":"[NAME OF ITEM]"}
 export const transmogrifyLambdaCoins = nameOfItem => {
-  axiosWithAuth()
-    .post('/adv/transmogrify')
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  return axiosWithAuth().post('/adv/transmogrify', { name: nameOfItem });
 };
 
 // {"direction":"s", "next_room_id": "0"}
@@ -124,8 +108,5 @@ export const mineCoin = proof => {
 };
 
 export const getLastProof = () => {
-  axiosWithAuth()
-    .get('/bc/last_proof')
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  return axiosWithAuth().get('/bc/last_proof');
 };
