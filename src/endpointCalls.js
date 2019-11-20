@@ -101,10 +101,7 @@ export const pray = () => {
 
 // {"proof":new_proof}
 export const mineCoin = proof => {
-  axiosWithAuth()
-    .post('/bc/mine/')
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  return axiosWithAuth().post('/bc/mine/', { proof });
 };
 
 export const getLastProof = () => {

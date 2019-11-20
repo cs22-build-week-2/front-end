@@ -186,6 +186,7 @@ const PlayerStatus = ({ changeRoomInfo }) => {
             </button>
           ))}
         </p>
+        <p>Status: {lambdaCoin.status}</p>
         <p>Messages: {lambdaCoin.messages}</p>
         <p>Errors: {lambdaCoin.errors}</p>
         <h5>Player Cooldown</h5>
