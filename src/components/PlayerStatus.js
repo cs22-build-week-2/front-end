@@ -113,8 +113,8 @@ const PlayerStatus = ({ changeRoomInfo }) => {
   const displayLambdaCoin = () => {
     seeLambdaCoinBalance()
       .then(res => {
-        const messages = res.data.messages;
-        const errors = res.data.errors;
+        const messages = JSON.stringify(res.data.messages);
+        const errors = JSON.stringify(res.data.errors);
         setLambdaCoin({ ...res.data, messages, errors });
         setPlayerCooldown(res.data.cooldown);
       })
