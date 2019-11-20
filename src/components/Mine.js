@@ -9,6 +9,8 @@ const Mine = () => {
     messages: [],
     proof: 0
   });
+  const [wellMessage, setWellMessage] = useState('');
+  const [decodedMessage, setDecodedMessage] = useState('');
 
   const displayLastProof = () => {
     getLastProof()
@@ -20,10 +22,30 @@ const Mine = () => {
       .catch(err => console.log(err));
   };
 
+  const onInputWellMessage = event => {
+    setWellMessage(event.target.value);
+  };
+
+  const decodeMessage = () => {
+    setDecodedMessage(
+      wellMessage
+        .split(' ')
+        .filter((binary, binaryIndex) => binaryIndex % 5 === 2)
+        .map(binary => parseInt(binary, 2))
+        .map(decimal => String.fromCharCode(decimal))
+        .join('')
+    );
+    setWellMessage('');
+  };
+
   return (
     <>
       <h3>Mine</h3>
-      <button type='button' onClick={displayLastProof} disabled={proof.cooldown}>
+      <button
+        type='button'
+        onClick={displayLastProof}
+        disabled={proof.cooldown}
+      >
         Last Proof
       </button>
       <p>Proof: {proof.proof}</p>
@@ -31,6 +53,17 @@ const Mine = () => {
       <p>Difficulty: {proof.difficulty}</p>
       <p>Messages: {proof.messages}</p>
       <p>Errors: {proof.errors}</p>
+      <form>
+        <input
+          type='text'
+          value={wellMessage}
+          onChange={event => onInputWellMessage(event)}
+        />
+        <button type='button' onClick={decodeMessage}>
+          Decode Message
+        </button>
+        <p>{decodedMessage}</p>
+      </form>
     </>
   );
 };
