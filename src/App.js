@@ -17,7 +17,7 @@ function App() {
     errors: [],
     messages: [],
     items: [],
-    players: []
+    players: [],
   };
 
   const [roomCooldown, setRoomCooldown] = useState(0);
@@ -43,7 +43,7 @@ function App() {
           exits: JSON.stringify(exits),
           roomCooldown: room_cooldown,
           errors: JSON.stringify(errors),
-          messages: JSON.stringify(messages)
+          messages: JSON.stringify(messages),
         });
       })
       .catch(err => console.log(err));
@@ -77,7 +77,7 @@ function App() {
         changeRoomInfo={changeRoomInfo}
       />
       <PlayerStatus changeRoomInfo={changeRoomInfo} />
-      <Mine />
+      {/* <Mine /> */}
       <World />
     </div>
   );

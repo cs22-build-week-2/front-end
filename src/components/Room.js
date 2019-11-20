@@ -99,7 +99,7 @@ const Room = ({ roomInfo, roomCooldown, setRoomCooldown, changeRoomInfo }) => {
 
   return (
     <>
-      <div>
+      <div className='room-and-actions'>
         <div className='room-status'>
           <h3>Room Status</h3>
           <p>Title: {roomInfo.title}</p>
@@ -107,6 +107,11 @@ const Room = ({ roomInfo, roomCooldown, setRoomCooldown, changeRoomInfo }) => {
           <p>Coordinates: {roomInfo.coordinates}</p>
           <p>Room ID: {roomInfo.room_id}</p>
           <p>Exits: {roomInfo.exits}</p>
+          <p>Elevation: {roomInfo.elevation}</p>
+          <p>Terrain: {roomInfo.terrain}</p>
+          <p>Players: {roomInfo.players}</p>
+          <p>Messages: {roomInfo.messages}</p>
+          <p>Errors: {roomInfo.errors}</p>
           <p>
             Items:
             {roomInfo.items &&
@@ -150,11 +155,6 @@ const Room = ({ roomInfo, roomCooldown, setRoomCooldown, changeRoomInfo }) => {
               Confirm Sell Item
             </button>
           </form>
-          <p>Elevation: {roomInfo.elevation}</p>
-          <p>Terrain: {roomInfo.terrain}</p>
-          <p>Players: {roomInfo.players}</p>
-          <p>Messages: {roomInfo.messages}</p>
-          <p>Errors: {roomInfo.errors}</p>
         </div>
         <div className='player-actions'>
           <div>
@@ -191,24 +191,26 @@ const Room = ({ roomInfo, roomCooldown, setRoomCooldown, changeRoomInfo }) => {
               Right
             </button>
           </div>
-          <form onSubmit={event => submitDashPath(event)}>
-            <input
-              type='text'
-              placeholder='Type in path you want to traverse, i.e. 101,9,8,6'
-              value={dashPath}
-              onChange={event => dashPathInputChange(event)}
-              disabled
-            />
-            <button
-              type='submit'
-              onClick={event => submitDashPath(event)}
-              disabled>
-              Dash!
-            </button>
-          </form>
           <div>
-            <h5>Move Cooldown</h5>
-            <p>{roomCooldown}</p>
+            <form onSubmit={event => submitDashPath(event)}>
+              <input
+                type='text'
+                placeholder='Type in path you want to traverse, i.e. 101,9,8,6'
+                value={dashPath}
+                onChange={event => dashPathInputChange(event)}
+                disabled
+              />
+              <button
+                type='submit'
+                onClick={event => submitDashPath(event)}
+                disabled>
+                Dash!
+              </button>
+            </form>
+          </div>
+          <div>
+            <h4>Move Cooldown</h4>
+            <h2>{roomCooldown}</h2>
           </div>
         </div>
       </div>

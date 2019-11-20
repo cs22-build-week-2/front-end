@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { getLastProof } from '../endpointCalls';
+import "./index.css"
 
 const Mine = () => {
   const [proof, setProof] = useState({
@@ -39,7 +40,7 @@ const Mine = () => {
   };
 
   return (
-    <>
+    <div className="mine">
       <h3>Mine</h3>
       <button
         type='button'
@@ -64,7 +65,7 @@ const Mine = () => {
         </button>
         <p>{decodedMessage}</p>
       </form>
-    </>
+    </div>
   );
 };
 

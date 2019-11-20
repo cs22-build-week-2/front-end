@@ -8,6 +8,7 @@ import {
   changeName,
 } from '../endpointCalls';
 import './index.css';
+import Mine from './Mine';
 
 const PlayerStatus = ({ changeRoomInfo }) => {
   const playerState = {
@@ -144,7 +145,7 @@ const PlayerStatus = ({ changeRoomInfo }) => {
   };
 
   return (
-    <>
+    <div className='status-mine'>
       <div className='player-status'>
         <h3>Player Status/Inventory</h3>
         <button
@@ -210,10 +211,13 @@ const PlayerStatus = ({ changeRoomInfo }) => {
         </p>
         <p>Messages: {lambdaCoin.messages}</p>
         <p>Errors: {lambdaCoin.errors}</p>
-        <h5>Player Cooldown</h5>
-        <p>{playerCooldown}</p>
+        <h4>Player Cooldown</h4>
+        <h2>{playerCooldown}</h2>
       </div>
-    </>
+      <div className='mine'>
+        <Mine />
+      </div>
+    </div>
   );
 };
 
