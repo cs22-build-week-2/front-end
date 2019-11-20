@@ -62,18 +62,12 @@ export const takeGhostItem = () => {
 };
 
 export const seeLambdaCoinBalance = () => {
-  axiosWithAuth()
-    .get('/bc/get_balance/')
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  return axiosWithAuth().get('/bc/get_balance/');
 };
 
 // {"name":"[NAME OF ITEM]"}
 export const transmogrifyLambdaCoins = nameOfItem => {
-  axiosWithAuth()
-    .post('/adv/transmogrify')
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  return axiosWithAuth().post('/adv/transmogrify', { name: nameOfItem });
 };
 
 // {"direction":"s", "next_room_id": "0"}
@@ -114,8 +108,5 @@ export const mineCoin = proof => {
 };
 
 export const getLastProof = () => {
-  axiosWithAuth()
-    .get('/bc/last_proof')
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  return axiosWithAuth().get('/bc/last_proof');
 };

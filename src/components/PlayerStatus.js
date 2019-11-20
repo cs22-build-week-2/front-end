@@ -3,7 +3,8 @@ import {
   checkStatus,
   confirmSellTreasure,
   giveGhostItem,
-  takeGhostItem
+  takeGhostItem,
+  seeLambdaCoinBalance
 } from '../endpointCalls';
 
 const PlayerStatus = ({ changeRoomInfo }) => {
@@ -25,10 +26,16 @@ const PlayerStatus = ({ changeRoomInfo }) => {
   const [playerCooldown, setPlayerCooldown] = useState(0);
   const [actionState, setActionState] = useState(true);
   const [ghostItem, setGhostItem] = useState(false);
+  const [lambdaCoin, setLambdaCoin] = useState({
+    cooldown: 0,
+    errors: [],
+    messages: []
+  });
 
   useEffect(() => {
     if (localStorage.getItem('ghost')) {
       setGhostItem(localStorage.getItem('ghost'));
+      setActionState(false);
     }
   }, []);
 
@@ -103,6 +110,17 @@ const PlayerStatus = ({ changeRoomInfo }) => {
       .catch(err => console.log(err));
   };
 
+  const displayLambdaCoin = () => {
+    seeLambdaCoinBalance()
+      .then(res => {
+        const messages = res.data.messages;
+        const errors = res.data.errors;
+        setLambdaCoin({ ...res.data, messages, errors });
+        setPlayerCooldown(res.data.cooldown);
+      })
+      .catch(err => console.log);
+  };
+
   const buttonStyles = {
     backgroundColor: 'grey'
   };
@@ -122,6 +140,7 @@ const PlayerStatus = ({ changeRoomInfo }) => {
           type='button'
           onClick={() => setActionState(true)}
           style={actionState ? buttonStyles : null}
+          disabled={ghostItem}
         >
           Sell Items
         </button>
@@ -138,6 +157,9 @@ const PlayerStatus = ({ changeRoomInfo }) => {
           disabled={!ghostItem}
         >
           Take Item from Ghost
+        </button>
+        <button type='button' onClick={displayLambdaCoin}>
+          Display Lambda Coin
         </button>
         <p>Name: {playerStatus.name}</p>
         <p>Cooldown: {playerStatus.cooldown}</p>
@@ -158,12 +180,14 @@ const PlayerStatus = ({ changeRoomInfo }) => {
                   ? submitConfirmSellItem(event)
                   : clickGiveGhostItem(event);
               }}
-              disabled={playerCooldown}
+              disabled={playerCooldown || ghostItem}
             >
               {item}
             </button>
           ))}
         </p>
+        <p>Messages: {lambdaCoin.messages}</p>
+        <p>Errors: {lambdaCoin.errors}</p>
         <h5>Player Cooldown</h5>
         <p>{playerCooldown}</p>
       </div>
