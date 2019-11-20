@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import {
   checkItemOrPlayer,
   wearEquipment,
-  unwearEquipment
+  unwearEquipment,
+  pray
 } from '../endpointCalls';
 import ItemOrPlayerStatus from './ItemOrPlayerStatus';
 
-const PlayerActions = ({ setRoomCooldown, roomCooldown }) => {
+const PlayerActions = ({ setRoomCooldown, roomCooldown, changeRoomInfo }) => {
   const [itemOrPlayer, setItemOrPlayer] = useState('');
   const [wearEquipmentS, setWearEquipment] = useState('');
   const [unwearEquipmentS, setUnwearEquipment] = useState('');
@@ -62,6 +63,12 @@ const PlayerActions = ({ setRoomCooldown, roomCooldown }) => {
       .catch(err => console.log(err));
   };
 
+  const submitPray = () => {
+    pray()
+      .then(res => changeRoomInfo(res.data))
+      .catch(err => console.log(err));
+  };
+
   return (
     <>
       <h3>Player Actions</h3>
@@ -113,6 +120,7 @@ const PlayerActions = ({ setRoomCooldown, roomCooldown }) => {
           Take Off Equipment
         </button>
       </form>
+      <button onClick={submitPray}>Pray</button>
       <ItemOrPlayerStatus data={itemOrPlayerData} />
     </>
   );

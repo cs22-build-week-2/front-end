@@ -108,17 +108,11 @@ export const confirmSellTreasure = nameOfTreasure => {
 
 // {"name":"[NEW NAME]"}
 export const changeName = name => {
-  axiosWithAuth()
-    .post('/adv/change_name/')
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  return axiosWithAuth().post('/adv/change_name/', name);
 };
 
 export const pray = () => {
-  axiosWithAuth()
-    .post('/adv/pray/')
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  return axiosWithAuth().post('/adv/pray/');
 };
 
 // {"proof":new_proof}
