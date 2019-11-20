@@ -1,0 +1,31 @@
+.tile {
+  display: inline-flex;
+  background-color: forestgreen;
+}
+
+.grass {
+  background-image: url('/tiles/grass.png');
+  background-size: 100%;
+}
+
+.rock {
+  background-image: url('/tiles/rock.png');
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.tree {
+  background-image: url('/tiles/finishline(pre).png');
+  background-size: 100%;
+  background-color: white;
+}
+
+.castle {
+  background-image: url('/tiles/castle.png');
+  background-size: 100%;
+  background-color: lightgray;
+}
+.current{
+  background-color: blue
+}

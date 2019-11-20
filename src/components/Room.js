@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import './index.css';
 import {
   move,
   pickupTreasure,
   dropTreasure,
   sellTreasure,
   confirmSellTreasure,
-  dashToRoom
+  dashToRoom,
 } from '../endpointCalls';
 import PlayerActions from './PlayerActions';
+import PlayerStatus from './PlayerStatus';
 
 const Room = ({ roomInfo, roomCooldown, setRoomCooldown, changeRoomInfo }) => {
   const [roomId, setRoomId] = useState('');
@@ -98,7 +100,7 @@ const Room = ({ roomInfo, roomCooldown, setRoomCooldown, changeRoomInfo }) => {
   return (
     <>
       <div>
-        <div>
+        <div className='room-status'>
           <h3>Room Status</h3>
           <p>Title: {roomInfo.title}</p>
           <p>Description: {roomInfo.description}</p>
@@ -106,15 +108,14 @@ const Room = ({ roomInfo, roomCooldown, setRoomCooldown, changeRoomInfo }) => {
           <p>Room ID: {roomInfo.room_id}</p>
           <p>Exits: {roomInfo.exits}</p>
           <p>
-            Items:{' '}
+            Items:
             {roomInfo.items &&
               roomInfo.items.map(item => (
                 <button
                   name='nameOfItem'
                   value={item}
                   onClick={event => submitItemPickup(event, true)}
-                  disabled={roomCooldown}
-                >
+                  disabled={roomCooldown}>
                   {item}
                 </button>
               ))}
@@ -130,26 +131,22 @@ const Room = ({ roomInfo, roomCooldown, setRoomCooldown, changeRoomInfo }) => {
             />
             <button
               onClick={event => submitItemPickup(event)}
-              disabled={roomCooldown}
-            >
+              disabled={roomCooldown}>
               Get Item
             </button>
             <button
               onClick={event => submitDropItem(event)}
-              disabled={roomCooldown}
-            >
+              disabled={roomCooldown}>
               Drop Item
             </button>
             <button
               onClick={event => submitSellItem(event)}
-              disabled={roomCooldown}
-            >
+              disabled={roomCooldown}>
               Sell Item
             </button>
             <button
               onClick={event => submitConfirmSellItem(event)}
-              disabled={roomCooldown}
-            >
+              disabled={roomCooldown}>
               Confirm Sell Item
             </button>
           </form>
@@ -159,9 +156,9 @@ const Room = ({ roomInfo, roomCooldown, setRoomCooldown, changeRoomInfo }) => {
           <p>Messages: {roomInfo.messages}</p>
           <p>Errors: {roomInfo.errors}</p>
         </div>
-        <div>
-          <h3>Move Buttons</h3>
+        <div className='player-actions'>
           <div>
+            <h3>Move Buttons</h3>
             <input
               name='roomId'
               placeholder='If you know the Room ID, input here!'
@@ -172,29 +169,25 @@ const Room = ({ roomInfo, roomCooldown, setRoomCooldown, changeRoomInfo }) => {
             <button
               type='button'
               onClick={() => onMoveButton('n')}
-              disabled={roomCooldown}
-            >
+              disabled={roomCooldown}>
               Up
             </button>
             <button
               type='button'
               onClick={() => onMoveButton('s')}
-              disabled={roomCooldown}
-            >
+              disabled={roomCooldown}>
               Down
             </button>
             <button
               type='button'
               onClick={() => onMoveButton('w')}
-              disabled={roomCooldown}
-            >
+              disabled={roomCooldown}>
               Left
             </button>
             <button
               type='button'
               onClick={() => onMoveButton('e')}
-              disabled={roomCooldown}
-            >
+              disabled={roomCooldown}>
               Right
             </button>
           </div>
@@ -206,7 +199,10 @@ const Room = ({ roomInfo, roomCooldown, setRoomCooldown, changeRoomInfo }) => {
               onChange={event => dashPathInputChange(event)}
               disabled
             />
-            <button type='submit' onClick={event => submitDashPath(event)} disabled>
+            <button
+              type='submit'
+              onClick={event => submitDashPath(event)}
+              disabled>
               Dash!
             </button>
           </form>
@@ -216,11 +212,6 @@ const Room = ({ roomInfo, roomCooldown, setRoomCooldown, changeRoomInfo }) => {
           </div>
         </div>
       </div>
-      <PlayerActions
-        changeRoomInfo={changeRoomInfo}
-        setRoomCooldown={setRoomCooldown}
-        roomCooldown={roomCooldown}
-      />
     </>
   );
 };

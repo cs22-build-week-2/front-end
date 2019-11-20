@@ -4,8 +4,10 @@ import {
   confirmSellTreasure,
   giveGhostItem,
   takeGhostItem,
-  seeLambdaCoinBalance
+  seeLambdaCoinBalance,
+  changeName,
 } from '../endpointCalls';
+import './index.css';
 
 const PlayerStatus = ({ changeRoomInfo }) => {
   const playerState = {
@@ -20,7 +22,7 @@ const PlayerStatus = ({ changeRoomInfo }) => {
     inventory: [],
     status: [],
     errors: [],
-    messages: []
+    messages: [],
   };
   const [playerStatus, setPlayerStatus] = useState(playerState);
   const [playerCooldown, setPlayerCooldown] = useState(0);
@@ -29,7 +31,7 @@ const PlayerStatus = ({ changeRoomInfo }) => {
   const [lambdaCoin, setLambdaCoin] = useState({
     cooldown: 0,
     errors: [],
-    messages: []
+    messages: [],
   });
 
   useEffect(() => {
@@ -38,6 +40,7 @@ const PlayerStatus = ({ changeRoomInfo }) => {
       setActionState(false);
     }
   }, []);
+  const [newName, setNewName] = useState({ newName: '' });
 
   useEffect(() => {
     const timer = setTimeout(function() {
@@ -76,7 +79,7 @@ const PlayerStatus = ({ changeRoomInfo }) => {
           inventory: inventory,
           status: JSON.stringify(status),
           errors: JSON.stringify(errors),
-          messages: JSON.stringify(messages)
+          messages: JSON.stringify(messages),
         });
         setPlayerCooldown(cooldown);
       })
@@ -107,6 +110,21 @@ const PlayerStatus = ({ changeRoomInfo }) => {
         setGhostItem(false);
         localStorage.setItem('ghost', false);
       })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  const onNameChange = event => {
+    setNewName({ [event.target.name]: event.target.value });
+  };
+
+  const onNameSubmit = event => {
+    event.preventDefault();
+    changeName(newName.newName)
+      .then(res => {
+        console.log(res.data);
+      })
       .catch(err => console.log(err));
   };
 
@@ -122,46 +140,51 @@ const PlayerStatus = ({ changeRoomInfo }) => {
   };
 
   const buttonStyles = {
-    backgroundColor: 'grey'
+    backgroundColor: 'grey',
   };
 
   return (
     <>
-      <div>
+      <div className='player-status'>
         <h3>Player Status/Inventory</h3>
         <button
           type='button'
           onClick={onRefreshPlayerStatus}
-          disabled={playerCooldown}
-        >
+          disabled={playerCooldown}>
           Refresh Player Status
         </button>
         <button
           type='button'
           onClick={() => setActionState(true)}
           style={actionState ? buttonStyles : null}
-          disabled={ghostItem}
-        >
+          disabled={ghostItem}>
           Sell Items
         </button>
         <button
           type='button'
           onClick={() => setActionState(false)}
-          style={actionState ? null : buttonStyles}
-        >
+          style={actionState ? null : buttonStyles}>
           Interact With Ghost
         </button>
         <button
           type='button'
           onClick={clickTakeGhostItem}
-          disabled={!ghostItem}
-        >
+          disabled={!ghostItem}>
           Take Item from Ghost
         </button>
         <button type='button' onClick={displayLambdaCoin}>
           Display Lambda Coin
         </button>
         <p>Name: {playerStatus.name}</p>
+        <form onSubmit={event => onNameSubmit(event)}>
+          <input
+            name='newName'
+            placeholder='Type in your new name'
+            onChange={event => onNameChange(event)}
+            value={newName.newName}
+          />
+          <button type='submit'>Change Name</button>
+        </form>
         <p>Cooldown: {playerStatus.cooldown}</p>
         <p>Encumbrance: {playerStatus.encumbrance}</p>
         <p>Strength: {playerStatus.strength}</p>
@@ -180,8 +203,7 @@ const PlayerStatus = ({ changeRoomInfo }) => {
                   ? submitConfirmSellItem(event)
                   : clickGiveGhostItem(event);
               }}
-              disabled={playerCooldown || ghostItem}
-            >
+              disabled={playerCooldown || ghostItem}>
               {item}
             </button>
           ))}

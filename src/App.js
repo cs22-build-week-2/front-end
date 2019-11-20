@@ -4,6 +4,7 @@ import ApiKey from './components/ApiKey';
 import PlayerStatus from './components/PlayerStatus';
 import Mine from './components/Mine';
 import { initialize } from './endpointCalls';
+import World from './features/world/index.js';
 
 function App() {
   const roomState = {
@@ -77,6 +78,7 @@ function App() {
       />
       <PlayerStatus changeRoomInfo={changeRoomInfo} />
       <Mine />
+      <World />
     </div>
   );
 }

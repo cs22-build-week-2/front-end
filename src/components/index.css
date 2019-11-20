@@ -1,0 +1,49 @@
+.attributes {
+  display: flex;
+}
+
+p {
+  padding: 5px;
+}
+
+.room-status {
+  display: flex;
+  flex-flow: column;
+}
+
+.room-status p {
+  margin: 1px;
+}
+
+.api-key {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.api-key div {
+  margin-right: 10px;
+}
+
+.current-key {
+  display: flex;
+}
+
+.item-status p {
+  margin: 1px;
+}
+
+.player-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.player-actions div {
+  margin-right: 1%;
+}
+
+.player-status p {
+  margin: 1px;
+  word-break: break-all;
+  white-space: normal;
+}
