@@ -88,7 +88,7 @@ const Room = ({ roomInfo, roomCooldown, setRoomCooldown, changeRoomInfo }) => {
     event.preventDefault();
     dashToRoom({ room_path: dashPath, direction: roomId })
       .then(res => {
-        changeRoomInfo(res);
+        changeRoomInfo(res.data);
         setRoomId('');
         setDashPath('');
       })
@@ -204,9 +204,8 @@ const Room = ({ roomInfo, roomCooldown, setRoomCooldown, changeRoomInfo }) => {
               placeholder='Type in path you want to traverse, i.e. 101,9,8,6'
               value={dashPath}
               onChange={event => dashPathInputChange(event)}
-              disabled
             />
-            <button type='submit' onClick={event => submitDashPath(event)} disabled>
+            <button type='submit' onClick={event => submitDashPath(event)}>
               Dash!
             </button>
           </form>
