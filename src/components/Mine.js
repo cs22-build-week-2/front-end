@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getLastProof, mineCoin } from '../endpointCalls';
-import 'index.css';
+import './index.css';
 
 const Mine = () => {
   const [proof, setProof] = useState({

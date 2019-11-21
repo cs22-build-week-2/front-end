@@ -6,7 +6,7 @@ import {
   dropTreasure,
   sellTreasure,
   confirmSellTreasure,
-  dashToRoom,
+  dashToRoom
 } from '../endpointCalls';
 import PlayerActions from './PlayerActions';
 import PlayerStatus from './PlayerStatus';
@@ -120,7 +120,8 @@ const Room = ({ roomInfo, roomCooldown, setRoomCooldown, changeRoomInfo }) => {
                   name='nameOfItem'
                   value={item}
                   onClick={event => submitItemPickup(event, true)}
-                  disabled={roomCooldown}>
+                  disabled={roomCooldown}
+                >
                   {item}
                 </button>
               ))}
@@ -136,22 +137,26 @@ const Room = ({ roomInfo, roomCooldown, setRoomCooldown, changeRoomInfo }) => {
             />
             <button
               onClick={event => submitItemPickup(event)}
-              disabled={roomCooldown}>
+              disabled={roomCooldown}
+            >
               Get Item
             </button>
             <button
               onClick={event => submitDropItem(event)}
-              disabled={roomCooldown}>
+              disabled={roomCooldown}
+            >
               Drop Item
             </button>
             <button
               onClick={event => submitSellItem(event)}
-              disabled={roomCooldown}>
+              disabled={roomCooldown}
+            >
               Sell Item
             </button>
             <button
               onClick={event => submitConfirmSellItem(event)}
-              disabled={roomCooldown}>
+              disabled={roomCooldown}
+            >
               Confirm Sell Item
             </button>
           </form>
@@ -169,39 +174,32 @@ const Room = ({ roomInfo, roomCooldown, setRoomCooldown, changeRoomInfo }) => {
             <button
               type='button'
               onClick={() => onMoveButton('n')}
-              disabled={roomCooldown}>
+              disabled={roomCooldown}
+            >
               Up
             </button>
             <button
               type='button'
               onClick={() => onMoveButton('s')}
-              disabled={roomCooldown}>
+              disabled={roomCooldown}
+            >
               Down
             </button>
             <button
               type='button'
               onClick={() => onMoveButton('w')}
-              disabled={roomCooldown}>
+              disabled={roomCooldown}
+            >
               Left
             </button>
             <button
               type='button'
               onClick={() => onMoveButton('e')}
-              disabled={roomCooldown}>
+              disabled={roomCooldown}
+            >
               Right
             </button>
           </div>
-          <form onSubmit={event => submitDashPath(event)}>
-            <input
-              type='text'
-              placeholder='Type in path you want to traverse, i.e. 101,9,8,6'
-              value={dashPath}
-              onChange={event => dashPathInputChange(event)}
-            />
-            <button type='submit' onClick={event => submitDashPath(event)}>
-              Dash!
-            </button>
-          </form>
           <div>
             <form onSubmit={event => submitDashPath(event)}>
               <input
@@ -209,12 +207,8 @@ const Room = ({ roomInfo, roomCooldown, setRoomCooldown, changeRoomInfo }) => {
                 placeholder='Type in path you want to traverse, i.e. 101,9,8,6'
                 value={dashPath}
                 onChange={event => dashPathInputChange(event)}
-                disabled
               />
-              <button
-                type='submit'
-                onClick={event => submitDashPath(event)}
-                disabled>
+              <button type='submit' onClick={event => submitDashPath(event)}>
                 Dash!
               </button>
             </form>
