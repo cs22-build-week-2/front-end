@@ -4,6 +4,7 @@ import ApiKey from './components/ApiKey';
 import PlayerStatus from './components/PlayerStatus';
 import Mine from './components/Mine';
 import { initialize } from './endpointCalls';
+import World from './features/world/index.js';
 
 function App() {
   const roomState = {
@@ -16,7 +17,7 @@ function App() {
     errors: [],
     messages: [],
     items: [],
-    players: []
+    players: [],
   };
 
   const [roomCooldown, setRoomCooldown] = useState(0);
@@ -42,7 +43,7 @@ function App() {
           exits: JSON.stringify(exits),
           roomCooldown: room_cooldown,
           errors: JSON.stringify(errors),
-          messages: JSON.stringify(messages)
+          messages: JSON.stringify(messages),
         });
       })
       .catch(err => console.log(err));
@@ -76,7 +77,8 @@ function App() {
         changeRoomInfo={changeRoomInfo}
       />
       <PlayerStatus changeRoomInfo={changeRoomInfo} />
-      <Mine />
+      {/* <Mine /> */}
+      <World />
     </div>
   );
 }
