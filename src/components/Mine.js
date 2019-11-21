@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getLastProof, mineCoin } from '../endpointCalls';
+import 'index.css';
 
 const Mine = () => {
   const [proof, setProof] = useState({
@@ -75,7 +76,7 @@ const Mine = () => {
   };
 
   return (
-    <>
+    <div className='mine'>
       <h3>Mine</h3>
       <button type='button' onClick={displayLastProof} disabled={mineCooldown}>
         Last Proof
@@ -111,7 +112,7 @@ const Mine = () => {
         <p>Transactions: {mineMessage.transactions}</p>
         <p>Errors: {mineMessage.errors}</p>
       </form>
-    </>
+    </div>
   );
 };
 

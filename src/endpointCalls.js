@@ -1,4 +1,4 @@
-import { axiosWithAuth } from './axiosWithAuth';
+import axiosWithAuth from './axiosWithAuth';
 
 export const initialize = () => {
   return axiosWithAuth().get('/adv/init/');

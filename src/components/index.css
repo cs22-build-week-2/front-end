@@ -1,0 +1,70 @@
+.attributes {
+  display: flex;
+}
+
+p {
+  padding: 5px;
+  margin: 1px;
+}
+
+.room-status {
+  display: flex;
+  flex-flow: column;
+}
+
+.room-status p {
+  margin: 1px;
+}
+
+.api-key {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.api-key div {
+  margin-right: 10px;
+}
+
+.current-key {
+  display: flex;
+  align-items: center;
+}
+
+.item-status p {
+  margin: 1px;
+}
+
+.player-status {
+  margin-right: 40px;
+}
+
+.player-status p {
+  margin: 1px;
+  word-break: break-all;
+  white-space: normal;
+}
+
+.room-and-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.room-and-actions div {
+  width: 45%;
+}
+
+.player-actions {
+  display: flex;
+  flex-flow: column;
+}
+
+.player-actions div {
+  margin-right: 1%;
+  margin-bottom: 1%;
+  width: 100%;
+}
+
+.status-mine {
+  display: flex;
+}
